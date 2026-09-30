@@ -1,0 +1,74 @@
+[project]
+name = "narrateca-backend"
+version = "0.1.0"
+description = "API REST de NarraTECa: catálogo de archivo testimonial, RAG y chatbot anclado"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic[email]>=2.9",
+    "pydantic-settings>=2.6",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "asyncpg>=0.30",
+    "alembic>=1.14",
+    "pgvector>=0.3.6",
+    "argon2-cffi>=23.1",
+    "python-multipart>=0.0.17",
+    "httpx>=0.28",
+    "itsdangerous>=2.2",
+    "python-docx>=1.1",
+    "pypdf>=5.1",
+    # Embeddings locales. Se ejecuta el modelo con ONNX Runtime y no con
+    # PyTorch: mismo resultado, y la imagen del contenedor baja de unos 2,5 GB
+    # a unos 900 MB, lo que importa con `min_instances = 0`.
+    "onnxruntime>=1.20",
+    "tokenizers>=0.21",
+    "huggingface-hub>=0.26",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6.0",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# `Depends(...)` y compañía en argumentos por defecto son el idioma estándar de
+# FastAPI, no el error que B008 pretende atrapar.
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.Query",
+    "fastapi.Path",
+    "fastapi.Body",
+    "fastapi.Header",
+    "fastapi.Cookie",
+    "fastapi.Form",
+    "fastapi.File",
+    "fastapi.Security",
+]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/main.py", "*/migrations/*"]

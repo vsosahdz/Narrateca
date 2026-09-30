@@ -1,0 +1,11 @@
+__pycache__/
+.venv/
+.pytest_cache/
+.ruff_cache/
+tests/
+archivo/
+var/
+.env
+.env.*
+!.env.example
+*.md
