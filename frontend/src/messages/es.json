@@ -1,0 +1,238 @@
+{
+  "site": {
+    "name": "NarraTECa",
+    "tagline": "Archivo testimonial de cuatro comunidades",
+    "description": "Plataforma digital de archivo testimonial sobre migrantes, comunidad LGBTQ+, mujeres con discapacidad, y mujeres y violencia de género."
+  },
+  "nav": {
+    "skipToContent": "Saltar al contenido principal",
+    "mainLabel": "Navegación principal",
+    "home": "Inicio",
+    "themes": "Comunidades",
+    "chat": "Conversar",
+    "team": "Equipo de investigación"
+  },
+  "language": {
+    "label": "Idioma",
+    "switchTo": "Cambiar a {language}",
+    "current": "Idioma actual: {language}"
+  },
+  "themes": {
+    "migrantes": {
+      "name": "Migrantes"
+    },
+    "lgbtq": {
+      "name": "Comunidad LGBTQ+"
+    },
+    "mujeres_discapacidad": {
+      "name": "Mujeres con discapacidad"
+    },
+    "mujeres_violencia": {
+      "name": "Mujeres y violencia de género"
+    }
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "No fue posible cargar el contenido.",
+    "translationOf": "Traducción del testimonio original en español",
+    "comingSoon": "Próximamente"
+  },
+  "footer": {
+    "rights": "Tecnológico de Monterrey",
+    "archiveNotice": "El material de este archivo se publica con el consentimiento de las personas que lo compartieron."
+  },
+  "home": {
+    "intro": "Cuatro comunidades, sus voces y su memoria. Un archivo de testimonios, entrevistas, fotografías y documentos reunidos por el equipo de investigación.",
+    "exploreTheme": "Explorar {theme}",
+    "themesHeading": "Comunidades"
+  },
+  "sections": {
+    "testimony": "Testimonios",
+    "interview": "Entrevistas",
+    "video": "Videos",
+    "photo": "Fotografías",
+    "geo_item": "Mapa",
+    "news_post": "Noticias",
+    "curated_link": "En los medios"
+  },
+  "content": {
+    "anonymous": "Testimonio anónimo",
+    "recordedOn": "Registrado el {date}",
+    "readMore": "Leer completo",
+    "backToTheme": "Volver a {theme}",
+    "filterLabel": "Filtrar por tipo de contenido",
+    "filterAll": "Todo",
+    "notFound": "Este contenido no está disponible.",
+    "notFoundHelp": "Puede haber sido retirado, o la dirección puede ser incorrecta.",
+    "externalSource": "Publicado originalmente en {source}",
+    "openExternal": "Ver en el medio original",
+    "emptyTheme": "Todavía no hay contenido publicado de esta comunidad."
+  },
+  "media": {
+    "noVideoSupport": "Tu navegador no puede reproducir este video.",
+    "subtitlesEs": "Español",
+    "subtitlesEn": "English",
+    "externalNotice": "Este video se reproduce desde un servicio externo.",
+    "transcript": "Transcripción"
+  },
+  "team": {
+    "title": "Equipo de investigación",
+    "intro": "Quienes reúnen, documentan y cuidan este archivo.",
+    "empty": "El equipo se publicará próximamente.",
+    "noPhoto": "Sin fotografía"
+  },
+  "news": {
+    "own": "Nota del equipo",
+    "external": "Medio externo",
+    "opensInNewTab": "(se abre en una pestaña nueva)"
+  },
+  "admin": {
+    "title": "Panel de administración",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signingIn": "Entrando…",
+    "signInError": "No fue posible iniciar sesión.",
+    "content": "Contenido",
+    "newContent": "Nueva pieza",
+    "editContent": "Editar pieza",
+    "backToList": "Volver al listado",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "saved": "Cambios guardados.",
+    "publish": "Publicar",
+    "withdraw": "Retirar",
+    "delete": "Eliminar",
+    "deleteConfirm": "¿Eliminar esta pieza de forma permanente? Esta acción no se puede deshacer.",
+    "filterTheme": "Comunidad",
+    "filterType": "Tipo",
+    "all": "Todas",
+    "empty": "No hay contenido que coincida con el filtro.",
+    "loading": "Cargando…",
+    "columnTitle": "Título",
+    "columnTheme": "Comunidad",
+    "columnType": "Tipo",
+    "columnStatus": "Estado",
+    "columnConsent": "Consentimiento",
+    "columnIndex": "Chatbot",
+    "status": {
+      "draft": "Borrador",
+      "published": "Publicada",
+      "withdrawn": "Retirada"
+    },
+    "consent": {
+      "no_ai": "Sin uso con IA",
+      "site_only": "Solo sitio",
+      "public": "Uso amplio",
+      "label": "Alcance del consentimiento",
+      "help": "Publicar en el sitio y alimentar al chatbot son permisos distintos. Una pieza marcada «Sin uso con IA» se publica pero nunca entra al índice del chatbot."
+    },
+    "indexed": "En el corpus",
+    "notIndexed": "Fuera del corpus",
+    "fields": {
+      "theme": "Comunidad",
+      "type": "Tipo de contenido",
+      "slug": "Identificador en la dirección",
+      "slugHelp": "Minúsculas, números y guiones. Aparece en la dirección pública y no debería cambiar una vez publicada.",
+      "title": "Título",
+      "summary": "Resumen",
+      "body": "Cuerpo",
+      "attribution": "Atribución",
+      "personName": "Nombre real",
+      "personNameHelp": "Solo se muestra públicamente si la atribución es «Con nombre». Nunca se expone en piezas anónimas o con seudónimo.",
+      "pseudonym": "Seudónimo",
+      "sensitivity": "Sensibilidad",
+      "sensitivityHelp": "El material de sensibilidad alta se aloja en almacenamiento propio y nunca se incrusta desde un servicio externo.",
+      "altText": "Texto alternativo",
+      "altTextHelp": "Obligatorio para publicar contenido visual. Describe la imagen para quien no puede verla.",
+      "externalUrl": "Dirección externa",
+      "sourceName": "Medio",
+      "recordedOn": "Fecha de registro",
+      "media": "Archivo multimedia"
+    },
+    "attribution": {
+      "named": "Con nombre",
+      "pseudonym": "Con seudónimo",
+      "anonymous": "Anónima"
+    },
+    "sensitivity": {
+      "normal": "Normal",
+      "high": "Alta"
+    },
+    "upload": {
+      "choose": "Seleccionar archivo",
+      "uploading": "Subiendo…",
+      "current": "Archivo actual",
+      "replace": "Reemplazar archivo",
+      "error": "No fue posible subir el archivo."
+    },
+    "subtitles": {
+      "title": "Pistas de subtítulos",
+      "help": "El español cumple función de accesibilidad; el inglés, de traducción. Ambas son obligatorias para publicar material audiovisual.",
+      "missing": "Sin pista",
+      "present": "Pista cargada",
+      "edit": "Editar",
+      "placeholder": "WEBVTT\\n\\n00:00:01.000 --> 00:00:03.000\\nTexto de la pista"
+    }
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "generatedAt": "Actualizado {time}",
+    "totals": {
+      "items": "Piezas en el catálogo",
+      "published": "Publicadas",
+      "indexable": "En el corpus del chatbot"
+    },
+    "coverage": {
+      "title": "Cobertura por comunidad",
+      "help": "Cuánto hay, cuánto está publicado y cuánto alimenta al chatbot son tres números distintos. La diferencia entre ellos es el consentimiento.",
+      "community": "Comunidad",
+      "total": "Total",
+      "draft": "Borrador",
+      "published": "Publicadas",
+      "withdrawn": "Retiradas",
+      "indexable": "En corpus",
+      "noAi": "Sin uso IA",
+      "siteOnly": "Solo sitio",
+      "blockedAlt": "Sin alt"
+    },
+    "types": {
+      "title": "Por tipo de contenido"
+    },
+    "archiveHealth": {
+      "title": "Ingesta del archivo",
+      "help": "Documentos detectados en la carpeta del archivo y su situación frente al catálogo.",
+      "lastScan": "Último escaneo: {time}",
+      "neverScanned": "Sin escaneos todavía",
+      "needsAttention": "Requieren atención",
+      "status": {
+        "discovered": "Detectados",
+        "imported": "Importados",
+        "modified": "Modificados",
+        "missing": "Ausentes",
+        "failed": "Fallidos",
+        "skipped": "Omitidos"
+      }
+    },
+    "alerts": {
+      "title": "Avisos",
+      "none": "Nada requiere atención en este momento."
+    },
+    "activity": {
+      "title": "Actividad reciente",
+      "none": "Sin actividad registrada.",
+      "by": "por"
+    },
+    "pending": {
+      "title": "Pendiente de datos",
+      "help": "Estas secciones se activarán cuando exista la capacidad de la que dependen. Se muestran vacías a propósito: reportar cero haría creer que no hay uso, cuando lo que falta es la funcionalidad."
+    },
+    "actions": {
+      "title": "Acciones",
+      "scan": "Escanear archivo",
+      "scanning": "Escaneando…",
+      "refresh": "Actualizar"
+    }
+  }
+}

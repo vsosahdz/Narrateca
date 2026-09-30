@@ -1,0 +1,47 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 32rem;
+}
+
+.label {
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.required {
+  margin-left: 2px;
+  color: var(--state-danger);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.input {
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+
+  /* Borde de control: usa el token que cumple 3:1 contra la superficie
+     (WCAG 2.2 SC 1.4.11). No sustituir por --border-subtle, que es decorativo. */
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-base);
+}
+
+.inputError {
+  border-color: var(--state-danger);
+  border-width: 2px;
+}
+
+.error {
+  color: var(--state-danger);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}

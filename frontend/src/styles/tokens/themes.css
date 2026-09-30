@@ -1,0 +1,53 @@
+/**
+ * Capa de acento por tema.
+ *
+ * Cada comunidad tiene identidad visible, pero comparte la capa base. Se aplica
+ * con `data-theme="<slug>"` en un contenedor; el slug es el mismo que guarda la
+ * tabla `themes` del backend, cuyo campo `accent_token` referencia estos
+ * nombres y nunca un color literal.
+ *
+ * Los cuatro acentos salen del sistema de diseño: dos son los colores de marca
+ * (morado y verde azulado) y dos son tonos derivados de la familia arena, que
+ * es la tercera del sistema. Así las comunidades se distinguen sin que el sitio
+ * se sienta como cuatro sitios distintos.
+ *
+ * Cada tema define cuatro tokens:
+ *   --accent          color principal (enlaces, subrayados, énfasis)
+ *   --accent-strong   estado activo y hover
+ *   --accent-soft     fondo de realce, muy claro
+ *   --on-accent       texto legible sobre --accent
+ *
+ * Todos los valores están verificados contra los mínimos de contraste de WCAG
+ * por `npm run check:contrast`. Cambiar uno sin volver a ejecutar esa
+ * verificación es cómo se rompe la accesibilidad sin darse cuenta.
+ */
+
+[data-theme="migrantes"] {
+  --accent: #8a4b1c;
+  --accent-strong: #653714;
+  --accent-soft: #f5ebe1;
+  --on-accent: #ffffff;
+}
+
+[data-theme="lgbtq"] {
+  --accent: #4a1d7b;
+  --accent-strong: #35145a;
+  --accent-soft: #efeaf6;
+  --on-accent: #ffffff;
+}
+
+[data-theme="mujeres_discapacidad"] {
+  /* Versión oscurecida del verde azulado de marca: #008080 no alcanza el
+     mínimo de contraste como texto sobre fondo claro. */
+  --accent: #00615f;
+  --accent-strong: #004a49;
+  --accent-soft: #e2f2f1;
+  --on-accent: #ffffff;
+}
+
+[data-theme="mujeres_violencia"] {
+  --accent: #8e2450;
+  --accent-strong: #6b1b3c;
+  --accent-soft: #f8e9ef;
+  --on-accent: #ffffff;
+}

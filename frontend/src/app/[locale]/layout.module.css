@@ -1,0 +1,13 @@
+.main {
+  display: block;
+  min-height: 60vh;
+  padding-block: var(--space-7) var(--space-9);
+  padding-inline: var(--space-5);
+}
+
+/* El contenedor principal recibe foco programático al usar el enlace de salto.
+   No debe mostrar el anillo de foco, porque el foco aquí no proviene de una
+   navegación por teclado sobre un control. */
+.main:focus {
+  outline: none;
+}

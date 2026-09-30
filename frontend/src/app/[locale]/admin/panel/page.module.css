@@ -1,0 +1,290 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--text-2xl);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.help {
+  max-width: var(--measure);
+  margin-bottom: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.error {
+  padding: var(--space-3);
+  border: 1px solid var(--state-danger);
+  border-radius: var(--radius-md);
+  background-color: var(--state-danger-soft);
+  color: var(--state-danger);
+}
+
+/* --- Totales -------------------------------------------------------------- */
+
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-raised);
+}
+
+/* El número del corpus se destaca: es el que dice cuánto material presta su voz
+   al chatbot, y es la cifra que el equipo debe mirar con más cuidado. */
+.stat[data-emphasis="corpus"] {
+  border-color: var(--accent);
+}
+
+.statValue {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* --- Tarjetas ------------------------------------------------------------- */
+
+.card {
+  padding: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-raised);
+}
+
+.card[data-pending="yes"] {
+  border-style: dashed;
+  background-color: transparent;
+}
+
+.cardTitle {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-lg);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-5);
+}
+
+/* --- Avisos --------------------------------------------------------------- */
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding: var(--space-3);
+  border-left: 3px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface-sunken);
+  font-size: var(--text-sm);
+}
+
+.alert[data-level="blocking"] {
+  border-left-color: var(--state-danger);
+  background-color: var(--state-danger-soft);
+}
+
+.alert[data-level="warning"] {
+  border-left-color: var(--state-warning);
+  background-color: var(--state-warning-soft);
+}
+
+.alertCount {
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Tablas --------------------------------------------------------------- */
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--space-3);
+  text-align: left;
+}
+
+.table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.table thead th {
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--surface-sunken);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table tbody tr + tr th,
+.table tbody tr + tr td {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.table td[data-emphasis="corpus"] {
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+}
+
+.table td[data-warn="yes"] {
+  color: var(--state-danger);
+  font-weight: var(--weight-semibold);
+}
+
+/* --- Listas de conteo ----------------------------------------------------- */
+
+.statusList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.statusList li {
+  display: flex;
+  justify-content: space-between;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.statusList li[data-total="yes"] {
+  border-bottom: 0;
+  margin-top: var(--space-2);
+  border-top: 2px solid var(--border-strong);
+  font-weight: var(--weight-semibold);
+}
+
+.statusList strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.scanResult {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* --- Actividad ------------------------------------------------------------ */
+
+.activity {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-sm);
+}
+
+.activity li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.activity code {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.activity time {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* --- Pendiente ------------------------------------------------------------ */
+
+.pending {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pending li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-sm);
+}
+
+.pending strong {
+  color: var(--text-secondary);
+}
+
+.pending span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

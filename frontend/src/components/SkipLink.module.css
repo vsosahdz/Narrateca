@@ -1,0 +1,23 @@
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+
+  /* Fuera de la pantalla hasta recibir foco. No se usa `display: none`
+     porque eso lo eliminaría del orden de tabulación. */
+  transform: translateY(-200%);
+
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-raised);
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transition: transform 120ms ease-out;
+}
+
+.skipLink:focus-visible {
+  transform: translateY(0);
+}

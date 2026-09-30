@@ -1,0 +1,53 @@
+.page {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+.header {
+  max-width: var(--measure);
+  margin-bottom: var(--space-6);
+}
+
+.accent {
+  display: block;
+  width: var(--space-7);
+  height: 5px;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-full);
+  background-color: var(--accent);
+}
+
+.title {
+  font-size: var(--text-3xl);
+  letter-spacing: -0.02em;
+}
+
+.description {
+  margin-top: var(--space-4);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.section {
+  margin-top: var(--space-8);
+}
+
+.sectionTitle {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-xl);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.empty {
+  margin-top: var(--space-7);
+  color: var(--text-muted);
+}

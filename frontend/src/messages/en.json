@@ -1,0 +1,238 @@
+{
+  "site": {
+    "name": "NarraTECa",
+    "tagline": "A testimonial archive of four communities",
+    "description": "Digital testimonial archive on migrants, the LGBTQ+ community, women with disabilities, and women and gender-based violence."
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "mainLabel": "Main navigation",
+    "home": "Home",
+    "themes": "Communities",
+    "chat": "Conversation",
+    "team": "Research team"
+  },
+  "language": {
+    "label": "Language",
+    "switchTo": "Switch to {language}",
+    "current": "Current language: {language}"
+  },
+  "themes": {
+    "migrantes": {
+      "name": "Migrants"
+    },
+    "lgbtq": {
+      "name": "LGBTQ+ community"
+    },
+    "mujeres_discapacidad": {
+      "name": "Women with disabilities"
+    },
+    "mujeres_violencia": {
+      "name": "Women and gender-based violence"
+    }
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "The content could not be loaded.",
+    "translationOf": "Translation of the original testimony in Spanish",
+    "comingSoon": "Coming soon"
+  },
+  "footer": {
+    "rights": "Tecnológico de Monterrey",
+    "archiveNotice": "The material in this archive is published with the consent of the people who shared it."
+  },
+  "home": {
+    "intro": "Four communities, their voices and their memory. An archive of testimonies, interviews, photographs and documents gathered by the research team.",
+    "exploreTheme": "Explore {theme}",
+    "themesHeading": "Communities"
+  },
+  "sections": {
+    "testimony": "Testimonies",
+    "interview": "Interviews",
+    "video": "Videos",
+    "photo": "Photographs",
+    "geo_item": "Map",
+    "news_post": "News",
+    "curated_link": "In the media"
+  },
+  "content": {
+    "anonymous": "Anonymous testimony",
+    "recordedOn": "Recorded on {date}",
+    "readMore": "Read in full",
+    "backToTheme": "Back to {theme}",
+    "filterLabel": "Filter by content type",
+    "filterAll": "All",
+    "notFound": "This content is not available.",
+    "notFoundHelp": "It may have been withdrawn, or the address may be incorrect.",
+    "externalSource": "Originally published in {source}",
+    "openExternal": "View on the original outlet",
+    "emptyTheme": "There is no published content from this community yet."
+  },
+  "media": {
+    "noVideoSupport": "Your browser cannot play this video.",
+    "subtitlesEs": "Español",
+    "subtitlesEn": "English",
+    "externalNotice": "This video is played from an external service.",
+    "transcript": "Transcript"
+  },
+  "team": {
+    "title": "Research team",
+    "intro": "Those who gather, document and care for this archive.",
+    "empty": "The team will be published soon.",
+    "noPhoto": "No photograph"
+  },
+  "news": {
+    "own": "Team note",
+    "external": "External outlet",
+    "opensInNewTab": "(opens in a new tab)"
+  },
+  "admin": {
+    "title": "Admin panel",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in…",
+    "signInError": "Could not sign in.",
+    "content": "Content",
+    "newContent": "New item",
+    "editContent": "Edit item",
+    "backToList": "Back to list",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Changes saved.",
+    "publish": "Publish",
+    "withdraw": "Withdraw",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this item permanently? This cannot be undone.",
+    "filterTheme": "Community",
+    "filterType": "Type",
+    "all": "All",
+    "empty": "No content matches the filter.",
+    "loading": "Loading…",
+    "columnTitle": "Title",
+    "columnTheme": "Community",
+    "columnType": "Type",
+    "columnStatus": "Status",
+    "columnConsent": "Consent",
+    "columnIndex": "Chatbot",
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "withdrawn": "Withdrawn"
+    },
+    "consent": {
+      "no_ai": "No AI use",
+      "site_only": "Site only",
+      "public": "Broad use",
+      "label": "Consent scope",
+      "help": "Publishing on the site and feeding the chatbot are separate permissions. An item marked “No AI use” is published but never enters the chatbot index."
+    },
+    "indexed": "In corpus",
+    "notIndexed": "Out of corpus",
+    "fields": {
+      "theme": "Community",
+      "type": "Content type",
+      "slug": "URL identifier",
+      "slugHelp": "Lowercase, numbers and hyphens. It appears in the public address and should not change once published.",
+      "title": "Title",
+      "summary": "Summary",
+      "body": "Body",
+      "attribution": "Attribution",
+      "personName": "Real name",
+      "personNameHelp": "Shown publicly only when attribution is “Named”. Never exposed on anonymous or pseudonymous items.",
+      "pseudonym": "Pseudonym",
+      "sensitivity": "Sensitivity",
+      "sensitivityHelp": "High-sensitivity material is hosted on our own storage and never embedded from an external service.",
+      "altText": "Alternative text",
+      "altTextHelp": "Required to publish visual content. Describe the image for those who cannot see it.",
+      "externalUrl": "External URL",
+      "sourceName": "Outlet",
+      "recordedOn": "Recording date",
+      "media": "Media file"
+    },
+    "attribution": {
+      "named": "Named",
+      "pseudonym": "Pseudonymous",
+      "anonymous": "Anonymous"
+    },
+    "sensitivity": {
+      "normal": "Normal",
+      "high": "High"
+    },
+    "upload": {
+      "choose": "Choose file",
+      "uploading": "Uploading…",
+      "current": "Current file",
+      "replace": "Replace file",
+      "error": "Could not upload the file."
+    },
+    "subtitles": {
+      "title": "Subtitle tracks",
+      "help": "Spanish serves accessibility; English serves translation. Both are required to publish audiovisual material.",
+      "missing": "No track",
+      "present": "Track loaded",
+      "edit": "Edit",
+      "placeholder": "WEBVTT\\n\\n00:00:01.000 --> 00:00:03.000\\nTrack text"
+    }
+  },
+  "dashboard": {
+    "title": "Control panel",
+    "generatedAt": "Updated {time}",
+    "totals": {
+      "items": "Items in catalogue",
+      "published": "Published",
+      "indexable": "In chatbot corpus"
+    },
+    "coverage": {
+      "title": "Coverage by community",
+      "help": "How much exists, how much is published and how much feeds the chatbot are three different numbers. The gap between them is consent.",
+      "community": "Community",
+      "total": "Total",
+      "draft": "Draft",
+      "published": "Published",
+      "withdrawn": "Withdrawn",
+      "indexable": "In corpus",
+      "noAi": "No AI use",
+      "siteOnly": "Site only",
+      "blockedAlt": "No alt"
+    },
+    "types": {
+      "title": "By content type"
+    },
+    "archiveHealth": {
+      "title": "Archive ingestion",
+      "help": "Documents detected in the archive folder and their situation relative to the catalogue.",
+      "lastScan": "Last scan: {time}",
+      "neverScanned": "No scans yet",
+      "needsAttention": "Need attention",
+      "status": {
+        "discovered": "Detected",
+        "imported": "Imported",
+        "modified": "Modified",
+        "missing": "Missing",
+        "failed": "Failed",
+        "skipped": "Skipped"
+      }
+    },
+    "alerts": {
+      "title": "Alerts",
+      "none": "Nothing needs attention right now."
+    },
+    "activity": {
+      "title": "Recent activity",
+      "none": "No recorded activity.",
+      "by": "by"
+    },
+    "pending": {
+      "title": "Awaiting data",
+      "help": "These sections activate once the capability they depend on exists. They are deliberately empty: reporting zero would suggest there is no usage, when what is missing is the feature."
+    },
+    "actions": {
+      "title": "Actions",
+      "scan": "Scan archive",
+      "scanning": "Scanning…",
+      "refresh": "Refresh"
+    }
+  }
+}

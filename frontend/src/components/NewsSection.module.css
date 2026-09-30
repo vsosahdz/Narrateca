@@ -1,0 +1,75 @@
+.section {
+  margin-top: var(--space-8);
+}
+
+.title {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: var(--text-xl);
+}
+
+.list {
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* La distinción entre nota propia y medio externo se marca con texto y con
+   forma, no solo con color: depender del color excluiría a quien no lo
+   distingue (WCAG 2.2 SC 1.4.1). */
+.badge {
+  padding: 2px var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-full);
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge[data-kind="own"] {
+  border-style: solid;
+  background-color: var(--accent-soft);
+}
+
+.badge[data-kind="curated"] {
+  border-style: dashed;
+  background-color: transparent;
+}
+
+.itemTitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+}
+
+.link {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.summary {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}

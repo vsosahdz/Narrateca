@@ -1,0 +1,70 @@
+.page {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+.breadcrumb {
+  margin-bottom: var(--space-5);
+  font-size: var(--text-sm);
+}
+
+.header {
+  margin-bottom: var(--space-6);
+}
+
+.kicker {
+  color: var(--accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: var(--space-2);
+  font-size: var(--text-3xl);
+  letter-spacing: -0.02em;
+}
+
+.attribution {
+  margin-top: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.figure {
+  margin: 0 0 var(--space-5);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-sunken);
+}
+
+.caption {
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* Los testimonios se leen en serifa y con interlínea holgada: son textos largos
+   y su lectura es el propósito de la página, no un accesorio. */
+.body {
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.body p + p {
+  margin-top: var(--space-4);
+}
+
+.source {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}

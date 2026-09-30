@@ -1,0 +1,65 @@
+.card {
+  /* `relative` sostiene el área activable ampliada de `.link::after`. */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-raised);
+}
+
+.card:hover {
+  border-color: var(--accent);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background-color: var(--surface-sunken);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.title {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+}
+
+.link {
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Amplía el área activable a toda la tarjeta sin anidar un enlace dentro de
+   otro, que produciría marcado inválido y dos paradas de foco por pieza. */
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.summary {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.attribution {
+  margin-top: auto;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

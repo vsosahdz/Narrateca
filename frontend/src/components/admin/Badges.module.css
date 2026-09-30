@@ -1,0 +1,40 @@
+.badge {
+  display: inline-block;
+  padding: 2px var(--space-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.badge[data-status="published"] {
+  border-color: var(--state-success);
+  background-color: var(--state-success-soft);
+  color: var(--state-success);
+}
+
+.badge[data-status="withdrawn"] {
+  border-color: var(--state-danger);
+  background-color: var(--state-danger-soft);
+  color: var(--state-danger);
+}
+
+/* «Sin uso con IA» es el valor por defecto y el más protector: se muestra en
+   tono neutro y no como advertencia, porque no es una anomalía. */
+.badge[data-consent="public"] {
+  border-color: var(--state-warning);
+  background-color: var(--state-warning-soft);
+  color: var(--state-warning);
+}
+
+.badge[data-indexed="yes"] {
+  border-style: solid;
+  border-color: var(--state-warning);
+  color: var(--state-warning);
+}
+
+.badge[data-indexed="no"] {
+  border-style: dashed;
+}

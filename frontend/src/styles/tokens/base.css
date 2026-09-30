@@ -1,0 +1,144 @@
+/**
+ * Capa base de tokens — compartida por todo el sitio.
+ *
+ * Paleta derivada del sistema de diseño de NarraTECa:
+ *
+ *   Primary    #4A1D7B   morado profundo
+ *   Secondary  #008080   verde azulado
+ *   Tertiary   #E6DCD3   arena cálida
+ *   Neutral    #F5F2EF   blanco roto
+ *
+ * Los cuatro temas comparten esta capa. Lo único que cambia entre comunidades
+ * es el acento (ver `themes.css`), de modo que la plataforma se perciba como
+ * una sola cosa y no como cuatro sitios distintos.
+ *
+ * Sustituir la paleta completa es editar este archivo. Ningún componente
+ * escribe un color literal; la regla se verifica con `npm run lint:css` y el
+ * contraste con `npm run check:contrast`.
+ *
+ * Tipografía: Noto Serif para titulares e Inter para cuerpo y etiquetas, ambas
+ * **autoalojadas** mediante `next/font`. Cargarlas desde el CDN de Google
+ * revelaría la dirección IP de cada visitante a un tercero, lo cual es
+ * inaceptable en un sitio sobre comunidades vulnerables. `next/font` las
+ * descarga durante el build y las sirve desde el propio origen: misma
+ * tipografía, ninguna petición externa.
+ */
+
+:root {
+  /* --- Tipografía ------------------------------------------------------- */
+
+  /* Las variables --font-noto-serif y --font-inter las inyecta next/font. */
+  --font-sans:
+    var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif:
+    var(--font-noto-serif), Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem;   /* 13px */
+  --text-sm: 0.9375rem;   /* 15px */
+  --text-base: 1.0625rem; /* 17px — cuerpo cómodo para lectura larga */
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.375rem;
+  --text-4xl: 3rem;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75; /* testimonios y cuerpos largos */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --measure: 68ch; /* ancho máximo de línea para lectura */
+
+  /* --- Espaciado -------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* --- Radios ----------------------------------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* --- Marca ------------------------------------------------------------
+   * Los dos colores cromáticos del sistema, con las variantes que hacen falta
+   * para que cumplan contraste en cada uso.
+   */
+  --brand-primary: #4a1d7b;
+  --brand-primary-strong: #35145a;
+  --brand-primary-soft: #efeaf6;
+
+  /* El verde azulado de marca es #008080, pero sobre fondo claro alcanza
+     apenas 4.3:1: vale para rellenos y superficies, no para texto normal.
+     `--brand-secondary-text` es la variante oscurecida que sí cumple. */
+  --brand-secondary: #008080;
+  --brand-secondary-text: #00615f;
+  --brand-secondary-strong: #004a49;
+  --brand-secondary-soft: #e2f2f1;
+
+  /* --- Superficies ------------------------------------------------------ */
+  --surface-page: #f5f2ef;
+  --surface-raised: #fffdfb;
+  --surface-sunken: #e6dcd3;
+  --surface-inverse: #2e2a26;
+
+  /* --- Texto ------------------------------------------------------------ */
+  --text-primary: #241f1b;
+  --text-secondary: #4d453e;
+  --text-muted: #6d635a;
+  --text-on-inverse: #f7f4f1;
+
+  /* --- Bordes -----------------------------------------------------------
+   * `--border-subtle` es decorativo: separadores y divisiones que no delimitan
+   * un control. No está sujeto al mínimo de contraste.
+   *
+   * `--border-strong` delimita componentes de interfaz (campos, botones,
+   * casillas) y por lo tanto SÍ debe alcanzar 3:1 contra la superficie, según
+   * WCAG 2.2 SC 1.4.11. Usar el token decorativo para el borde de un campo es
+   * un defecto de accesibilidad.
+   */
+  --border-subtle: #ddd3c9;
+  --border-strong: #857a70;
+
+  /* --- Foco -------------------------------------------------------------
+   * El indicador de foco es un requisito de accesibilidad, no decoración.
+   * Nunca debe eliminarse con `outline: none` sin sustituirlo.
+   */
+  --focus-ring-color: #4a1d7b;
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+
+  /* --- Estados ---------------------------------------------------------- */
+  --state-danger: #9e1b32;
+  --state-danger-soft: #fbe9ec;
+  --state-success: #1a6a3c;
+  --state-success-soft: #e6f4eb;
+  --state-warning: #7d5300;
+  --state-warning-soft: #fdf3e0;
+
+  /* --- Sombras ---------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(36 31 27 / 8%);
+  --shadow-md: 0 2px 8px rgb(36 31 27 / 10%);
+  --shadow-lg: 0 8px 24px rgb(36 31 27 / 12%);
+
+  /* --- Acento por defecto ------------------------------------------------
+   * Páginas sin tema asignado (inicio, equipo, chatbot, panel). Los temas lo
+   * sobrescriben en `themes.css`.
+   */
+  --accent: #4a1d7b;
+  --accent-strong: #35145a;
+  --accent-soft: #efeaf6;
+  --on-accent: #ffffff;
+}
