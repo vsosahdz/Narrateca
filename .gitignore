@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Material del archivo — NUNCA se versiona
+# El acuerdo de confidencialidad prohíbe que el material salga de
+# infraestructura controlada. Un repositorio remoto es un tercero.
+#
+# Sin barra inicial a propósito: así se ignora a cualquier profundidad. Con
+# `/archivo/` solo se ignoraría en la raíz, y una carpeta en `backend/archivo/`
+# acabaría versionada sin que nadie lo notara.
+archivo/
+archive/
+media/
+var/
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.m4a
+
+# Terraform
+# El directorio .terraform contiene los binarios de los proveedores: cientos de
+# megabytes que se descargan con `terraform init` y jamás deben versionarse.
+# El archivo .terraform.lock.hcl SÍ se versiona: fija las versiones exactas de
+# los proveedores, que es lo que hace reproducible la infraestructura.
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+
+# Ajustes locales de herramientas
+# Hoy lo cubre el .gitignore global de quien desarrolla, pero eso no protege a
+# quien clone el repositorio en otra máquina.
+.claude/settings.local.json
+
+# Artefactos locales
+.DS_Store
+*.log
+coverage/
+htmlcov/
+.coverage

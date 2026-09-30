@@ -1,0 +1,33 @@
+# Entorno de desarrollo local.
+#
+# Reproduce lo que en producción provee Cloud SQL: PostgreSQL con la extensión
+# pgvector habilitada. El índice vectorial vive en la misma base que el
+# contenido, de modo que la base relacional siga siendo la única fuente de verdad
+# y el índice sea reconstruible desde ella (spec `rag-ingestion`).
+#
+#   docker compose up -d db
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: narrateca-db
+    environment:
+      POSTGRES_USER: narrateca
+      POSTGRES_PASSWORD: narrateca
+      POSTGRES_DB: narrateca
+    ports:
+      # 5433 en el anfitrión a propósito: deja libre el 5432 para una instalación
+      # de PostgreSQL que ya exista en la máquina de quien desarrolla. Si ambos
+      # escuchan en 5432, las conexiones a localhost van a la instalación local y
+      # fallan con "role narrateca does not exist", que es confuso de diagnosticar.
+      - "5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U narrateca -d narrateca"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

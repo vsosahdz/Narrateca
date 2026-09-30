@@ -1,0 +1,89 @@
+schema: spec-driven
+
+context: |
+  NarraTECa es una plataforma digital de archivo testimonial del Tecnológico de
+  Monterrey sobre cuatro comunidades: migrantes, comunidad LGBTQ+, mujeres con
+  discapacidad, y mujeres y violencia de género. Difunde fotografías, testimonios,
+  videos, mapas, entrevistas y noticias, e incluye un chatbot con LLM+RAG que
+  representa la voz de cada comunidad anclada en el archivo real.
+
+  Idioma: todos los artefactos, specs y documentación se escriben en ESPAÑOL.
+  El código, nombres de variables, endpoints y esquemas van en inglés.
+
+  Stack:
+  - Front: Next.js (App Router) + TypeScript. i18n es/en. Desplegado en Cloud Run.
+  - Back: Python + FastAPI, REST /api/v1, OpenAPI/Swagger nativo.
+    Estructura modular por dominio (modules/<dominio>/{router,service,repository,
+    schemas,models}.py). Equivalencia MVC: router=controller, service+repository=model,
+    schemas Pydantic=view.
+  - Datos: PostgreSQL + pgvector. Media en Google Cloud Storage.
+  - LLM: Ollama Cloud (Pro) para generación, detrás de una interfaz con endpoint
+    configurable para poder migrar a Ollama local u otro proveedor.
+  - Embeddings: bge-m3 LOCAL (multilingüe). Transcripción: Whisper LOCAL por lotes.
+    Solo los fragmentos recuperados y la consulta salen hacia el proveedor de LLM.
+  - RAG: código propio delgado, sin LangChain en fase 1. Migrar a LangGraph solo
+    si el flujo desarrolla suficientes ramas.
+  - Infraestructura: todo GCP se declara en Terraform con estado remoto en Cloud
+    Storage y entornos separados dev/prod. Nada se crea a mano desde la consola.
+  - Sin recursos ociosos: Cloud Run con min_instances = 0 y salida directa a VPC
+    (sin conector serverless, que mantiene instancias encendidas). La VM con GPU
+    para transcripción vive en un módulo aparte, fuera del apply por defecto, y se
+    destruye al terminar la campaña. Cloud SQL es el único costo permanente.
+
+  Decisiones de producto ya cerradas:
+  - El chatbot es una "narradora anclada": habla en primera persona del colectivo
+    pero cada afirmación concreta proviene de un fragmento recuperado, citado en
+    línea y enlazado a la pieza original del archivo. Nunca inventa biografía.
+  - Una PersonaConfig por tema (system prompt, namespace del corpus, política de
+    voz, política de seguridad, idioma) con estado borrador/próximamente/activa.
+    Cada comunidad se activa cuando su corpus alcanza el umbral, de forma
+    independiente de las demás.
+  - Ante revelaciones personales o señales de crisis: mensaje de contención breve
+    que reconoce lo dicho y recuerda que se habla con una IA. Sin catálogo de recursos.
+  - Modelo de contenido compartido: un ContentItem con `type` (foto, testimonio,
+    video, entrevista, noticia, enlace curado, contenido geográfico) y `theme`.
+    Los cuatro temas son datos, no código.
+  - Cada pieza lleva `consent_scope` (public | site_only | no_ai). Las marcadas
+    `no_ai` se publican pero NUNCA entran al índice vectorial.
+  - Ingesta al RAG automática al publicar, marcada como no revisada hasta que un
+    rol autorizado la apruebe o la retire del índice.
+  - Noticias: notas redactadas por el equipo + enlaces curados a medios externos.
+  - Video: mixto según sensibilidad. Testimonios sensibles en GCS propio con
+    reproductor propio; contenido de difusión general puede ir en YouTube.
+  - Admin con cuentas propias (correo + contraseña), roles admin y editor por tema.
+  - Conversaciones guardadas de forma anónima, sin IP, retención larga, con aviso
+    de privacidad antes del primer mensaje. Se guardan también los fragmentos
+    recuperados para poder evaluar y depurar el RAG.
+  - Bilingüismo: interfaz es/en y subtítulos es/en en audiovisual. El contenido
+    escrito permanece en español. El chatbot sí responde en el idioma del usuario
+    (RAG cross-lingual sobre corpus en español).
+  - Paleta: tokens base compartidos (tipografía, espaciado, superficies) más un
+    color de acento por tema. Intercambiable editando archivos de tokens.
+  - Sin botones ni funcionalidad de donación en ninguna parte del sitio.
+
+  Restricciones:
+  - Acuerdo de confidencialidad sobre el material del archivo. Minimizar la
+    superficie expuesta a terceros es un requisito de diseño, no una preferencia.
+  - Fase 1 acotada a un semestre con equipo de 2-4 personas.
+  - Accesibilidad: la certificación WCAG 2.2 AA es fase 2, pero los cimientos van
+    en fase 1 (alt_text obligatorio en el CMS, HTML semántico, navegación por
+    teclado, tokens de contraste, subtítulos generados desde la transcripción).
+  - Fuera de fase 1: avatar y voz, mapas interactivos completos, certificación de
+    accesibilidad, buscador de texto libre.
+
+rules:
+  proposal:
+    - Escribir en español
+    - Incluir siempre una sección de "No objetivos" que liste lo diferido a fase 2
+  design:
+    - Escribir en español
+    - Documentar las decisiones con su alternativa descartada y el porqué
+    - Señalar explícitamente qué datos salen hacia terceros y cuáles no
+  specs:
+    - Escribir en español
+    - Los requisitos que tocan consentimiento, privacidad o accesibilidad deben
+      ser verificables, no aspiracionales
+  tasks:
+    - Escribir en español
+    - Agrupar por capacidad y marcar cuáles son prerrequisito de otras
+    - Marcar explícitamente las tareas que dependen del inventario del archivo
