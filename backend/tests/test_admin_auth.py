@@ -9,11 +9,11 @@ from typing import Any
 
 import httpx
 import pytest
-from conftest import TEST_PASSWORD
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.modules.admin.models import Account
+from conftest import TEST_PASSWORD
 
 LOGIN = "/api/v1/admin/login"
 ADMIN_CONTENT = "/api/v1/admin/content"

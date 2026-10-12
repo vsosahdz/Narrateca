@@ -54,6 +54,14 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
+[tool.ruff.lint.isort]
+# Se declara explícitamente qué es código propio. Sin esto, ruff deduce la
+# clasificación de lo que encuentre en el entorno, así que da un veredicto con
+# el entorno virtual presente y otro sin él —por ejemplo en integración
+# continua, o en un clon recién hecho—. El resultado es una comprobación que
+# falla sin que nadie haya tocado el código.
+known-first-party = ["app", "tests", "conftest"]
+
 [tool.ruff.lint.flake8-bugbear]
 # `Depends(...)` y compañía en argumentos por defecto son el idioma estándar de
 # FastAPI, no el error que B008 pretende atrapar.
