@@ -185,9 +185,10 @@ module "frontend" {
   image                 = var.frontend_image
   service_account_email = module.cicd.runtime_email
 
-  cpu           = "1"
-  memory        = "512Mi"
-  max_instances = 2
+  cpu                = "1"
+  memory             = "512Mi"
+  max_instances      = 2
+  startup_probe_path = "/"
 
   env = {
     NODE_ENV = "production"

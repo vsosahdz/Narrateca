@@ -1,11 +1,13 @@
 """Punto de entrada de la API de NarraTECa."""
 
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from sqlalchemy import text
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1 import api_router
@@ -126,9 +128,45 @@ if settings.storage_backend == "local":
         )
 
 
-@app.get("/health", tags=["Sistema"], summary="Verificar estado del servicio")
+@app.get(
+    "/health",
+    tags=["Sistema"],
+    summary="El proceso está vivo",
+    description=(
+        "Responde en cuanto el proceso atiende peticiones. **No comprueba las "
+        "dependencias**: sirve para saber si hay que reiniciar el contenedor, no "
+        "si puede atender tráfico. Para eso está `/ready`."
+    ),
+)
 async def health() -> dict[str, str]:
     return {"status": "ok", "environment": settings.environment}
+
+
+@app.get(
+    "/ready",
+    tags=["Sistema"],
+    summary="El servicio puede atender tráfico",
+    description=(
+        "Verifica que la base de datos responde. Es el endpoint que debe usar la "
+        "sonda de arranque: un proceso vivo que no alcanza su base devuelve 200 en "
+        "`/health` y recibiría tráfico que solo puede fallar."
+    ),
+    responses={503: {"description": "Una dependencia no responde."}},
+)
+async def ready() -> JSONResponse:
+    try:
+        async with engine.connect() as conexion:
+            await conexion.execute(text("SELECT 1"))
+    except Exception as error:
+        # El detalle va al registro, no a la respuesta: un mensaje de conexión
+        # puede incluir el nombre del servidor y el usuario de la base.
+        logging.getLogger(__name__).error("La base de datos no responde: %s", error)
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={"status": "unavailable", "dependency": "database"},
+        )
+
+    return JSONResponse(content={"status": "ready", "environment": settings.environment})
 
 
 app.include_router(api_router, prefix=settings.api_v1_prefix)

@@ -76,7 +76,7 @@ USER narrateca
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD curl -fsS "http://localhost:${PORT}/health" || exit 1
+  CMD curl -fsS "http://localhost:${PORT}/ready" || exit 1
 
 # Un solo worker por contenedor: Cloud Run escala agregando instancias, no
 # procesos. Varios workers aquí competirían por la misma CPU asignada.

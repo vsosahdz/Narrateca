@@ -11,9 +11,48 @@ THEME_SLUGS = {"migrantes", "lgbtq", "mujeres_discapacidad", "mujeres_violencia"
 
 
 async def test_health(client: httpx.AsyncClient) -> None:
+    """`/health` responde con solo estar vivo el proceso."""
     response = await client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
+
+
+async def test_ready_confirma_la_base_de_datos(client: httpx.AsyncClient) -> None:
+    """`/ready` responde 200 cuando la base contesta."""
+    response = await client.get("/ready")
+    assert response.status_code == 200
+    assert response.json()["status"] == "ready"
+
+
+async def test_ready_responde_503_con_la_base_caida(
+    client: httpx.AsyncClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Es la razón de existir del endpoint, así que se prueba el caso malo.
+
+    Con la base inalcanzable, `/health` sigue devolviendo 200 —el proceso está
+    vivo— y `/ready` devuelve 503. Si esta distinción se perdiera, Cloud Run
+    enviaría tráfico a una instancia que solo puede fallar.
+    """
+    from app import main
+
+    class MotorCaido:
+        """`AsyncEngine.connect` es de solo lectura, así que se sustituye entero."""
+
+        def connect(self) -> None:
+            raise OSError("la base no responde")
+
+    monkeypatch.setattr(main, "engine", MotorCaido())
+
+    assert (await client.get("/health")).status_code == 200
+
+    response = await client.get("/ready")
+    assert response.status_code == 503
+    assert response.json()["dependency"] == "database"
+
+    # El motivo real no viaja al cliente: un mensaje de conexión puede incluir
+    # el servidor y el usuario de la base.
+    assert "la base no responde" not in response.text
 
 
 async def test_las_cuatro_comunidades_estan_sembradas(client: httpx.AsyncClient) -> None:

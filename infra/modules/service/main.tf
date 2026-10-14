@@ -59,6 +59,17 @@ variable "allow_public" {
   default = true
 }
 
+variable "startup_probe_path" {
+  type        = string
+  default     = "/ready"
+  description = <<-DESC
+    Ruta de la sonda de arranque. Por defecto `/ready`, que comprueba la base de
+    datos: un proceso vivo que no alcanza su base responde 200 en `/health` y
+    recibiría tráfico que solo puede fallar. El frontend no tiene dependencias
+    que comprobar y usa `/`.
+  DESC
+}
+
 locals {
   service_name = "narrateca-${var.name}-${var.environment}"
   uses_vpc     = var.subnet_name != null
@@ -141,7 +152,7 @@ resource "google_cloud_run_v2_service" "main" {
 
       startup_probe {
         http_get {
-          path = "/health"
+          path = var.startup_probe_path
         }
         # El backend carga un modelo de embeddings al arrancar. Un margen corto
         # haría que Cloud Run matara instancias sanas durante el arranque.

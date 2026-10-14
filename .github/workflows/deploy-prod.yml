@@ -164,7 +164,7 @@ jobs:
         run: |
           set -euo pipefail
           for intento in $(seq 1 10); do
-            codigo=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "${{ vars.API_URL }}/health" || echo 000)
+            codigo=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "${{ vars.API_URL }}/ready" || echo 000)
             [ "$codigo" = "200" ] && break
             echo "  intento $intento: $codigo"
             sleep 10
