@@ -39,6 +39,26 @@ var/
 *.wav
 *.m4a
 
+# Reincorporación explícita del código fuente.
+#
+# El precio de ignorar por nombre a cualquier profundidad es que `archive`,
+# `media` y `var` también son nombres de módulos. Ocurrió: `app/modules/archive`
+# y `app/modules/media` nunca llegaron al repositorio, y la integración continua
+# falló con `ModuleNotFoundError: No module named 'app.modules.archive'`.
+#
+# Se reincorporan los directorios, no los archivos: git no puede readmitir un
+# archivo cuyo directorio padre está excluido, así que la negación tiene que
+# apuntar a la carpeta.
+#
+# Se mantiene la regla amplia en lugar de anclarla a `backend/archivo/` porque
+# la raíz del archivo es configurable (`ARCHIVE_ROOT`) y puede apuntar a
+# cualquier sitio. Entre ignorar de más —que rompe la construcción y se nota en
+# minutos— e ignorar de menos —que publica material confidencial en un
+# repositorio público y no se nota— la elección no está repartida.
+!backend/app/modules/archive/
+!backend/app/modules/media/
+!openspec/changes/archive/
+
 # Terraform
 # El directorio .terraform contiene los binarios de los proveedores: cientos de
 # megabytes que se descargan con `terraform init` y jamás deben versionarse.

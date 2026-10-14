@@ -33,6 +33,11 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# El ejemplo sí se versiona: es la documentación de qué variables hacen falta
+# para levantar el frontend. Sin él, quien clona el repositorio tiene que
+# deducirlas leyendo el código. No contiene valores reales.
+!.env.example
+
 # vercel
 .vercel
 
