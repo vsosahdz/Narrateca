@@ -1,0 +1,5 @@
+Marcador para que la carpeta exista en el repositorio.
+
+Git no versiona directorios vacíos, y el Dockerfile copia `public/` a la imagen.
+Sin este archivo, el build del contenedor falla con «/app/public: not found» en
+cuanto la carpeta se queda sin contenido.

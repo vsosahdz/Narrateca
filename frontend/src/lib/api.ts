@@ -10,7 +10,9 @@
  * existe de este lado de la frontera.
  */
 
-const API_BASE = process.env.API_BASE_URL ?? "http://localhost:8000";
+import { envOr } from "./env";
+
+const API_BASE = envOr(process.env.API_BASE_URL, "http://localhost:8000");
 
 /** Segundos antes de volver a pedir el contenido al backend.
  *
@@ -104,7 +106,10 @@ export class ApiError extends Error {
   }
 }
 
-async function get<T>(path: string, params?: Record<string, string | undefined>): Promise<T> {
+async function get<T>(
+  path: string,
+  params?: Record<string, string | undefined>,
+): Promise<T> {
   const url = new URL(`/api/v1${path}`, API_BASE);
   for (const [key, value] of Object.entries(params ?? {})) {
     if (value !== undefined) url.searchParams.set(key, value);
@@ -116,7 +121,10 @@ async function get<T>(path: string, params?: Record<string, string | undefined>)
   });
 
   if (!response.ok) {
-    throw new ApiError(`GET ${url.pathname} devolvió ${response.status}`, response.status);
+    throw new ApiError(
+      `GET ${url.pathname} devolvió ${response.status}`,
+      response.status,
+    );
   }
 
   return (await response.json()) as T;
@@ -179,7 +187,9 @@ export const SECTION_ORDER: ContentType[] = [
  * Los tipos sin piezas quedan fuera del resultado: una sección vacía no debe
  * mostrarse (spec `public-site`).
  */
-export function groupByType(items: ContentItem[]): Array<[ContentType, ContentItem[]]> {
+export function groupByType(
+  items: ContentItem[],
+): Array<[ContentType, ContentItem[]]> {
   const groups = new Map<ContentType, ContentItem[]>();
   for (const item of items) {
     const bucket = groups.get(item.type);

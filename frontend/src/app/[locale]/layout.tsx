@@ -36,9 +36,19 @@ const inter = Inter({
   display: "swap",
 });
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
+/**
+ * No se prerrenderizan las rutas en el build, a propósito.
+ *
+ * Las páginas públicas obtienen su contenido de la API, así que prerrenderizar
+ * obligaría a tener la API en pie para **construir la imagen**. Eso impide
+ * reconstruir durante una caída, impide verificar el contenedor en integración
+ * continua, y ata el artefacto a los datos que había en un momento dado.
+ *
+ * En su lugar, cada ruta se renderiza en la primera petición y se guarda en
+ * caché según el `revalidate` de cada consulta. El HTML que recibe un buscador
+ * sigue siendo completo, que es lo que importaba para la difusión.
+ */
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,

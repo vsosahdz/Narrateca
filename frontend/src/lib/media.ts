@@ -8,7 +8,9 @@
 
 import type { ContentItem } from "./api";
 
-const MEDIA_BASE = process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "/media";
+import { envOr } from "./env";
+
+const MEDIA_BASE = envOr(process.env.NEXT_PUBLIC_MEDIA_BASE_URL, "/media");
 
 export function mediaUrl(key: string): string {
   return `${MEDIA_BASE}/${key.replace(/^\/+/, "")}`;

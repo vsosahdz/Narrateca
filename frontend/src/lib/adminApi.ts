@@ -12,7 +12,12 @@
 
 import type { ContentItem, ContentType, Sensitivity, Theme } from "./api";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+import { envOr } from "./env";
+
+const API_BASE = envOr(
+  process.env.NEXT_PUBLIC_API_BASE_URL,
+  "http://localhost:8000",
+);
 
 export type Role = "admin" | "editor";
 export type ConsentScope = "public" | "site_only" | "no_ai";
@@ -145,7 +150,9 @@ async function request<T>(
     credentials: "include",
     headers: {
       Accept: "application/json",
-      ...(init.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
+      ...(init.body instanceof FormData
+        ? {}
+        : { "Content-Type": "application/json" }),
       ...init.headers,
     },
   });
@@ -163,7 +170,12 @@ async function request<T>(
       typeof detail === "string"
         ? detail
         : Array.isArray(detail)
-          ? detail.map((e: { loc?: string[]; msg: string }) => `${e.loc?.at(-1) ?? ""}: ${e.msg}`).join(" · ")
+          ? detail
+              .map(
+                (e: { loc?: string[]; msg: string }) =>
+                  `${e.loc?.at(-1) ?? ""}: ${e.msg}`,
+              )
+              .join(" · ")
           : `La operación falló (${response.status}).`;
     throw new AdminApiError(message, response.status);
   }
@@ -184,12 +196,20 @@ export const adminApi = {
   me: () => request<Account>("/admin/me"),
 
   // --- Contenido ------------------------------------------------------------
-  listContent: (params: { theme?: string; type?: ContentType; limit?: number }) =>
-    request<AdminContentItem[]>("/admin/content", {}, {
-      theme: params.theme,
-      type: params.type,
-      limit: String(params.limit ?? 200),
-    }),
+  listContent: (params: {
+    theme?: string;
+    type?: ContentType;
+    limit?: number;
+  }) =>
+    request<AdminContentItem[]>(
+      "/admin/content",
+      {},
+      {
+        theme: params.theme,
+        type: params.type,
+        limit: String(params.limit ?? 200),
+      },
+    ),
 
   getContent: (id: string) => request<AdminContentItem>(`/admin/content/${id}`),
 
@@ -206,13 +226,21 @@ export const adminApi = {
     }),
 
   publish: (id: string) =>
-    request<AdminContentItem>(`/admin/content/${id}/publish`, { method: "POST" }),
+    request<AdminContentItem>(`/admin/content/${id}/publish`, {
+      method: "POST",
+    }),
 
   withdraw: (id: string) =>
-    request<AdminContentItem>(`/admin/content/${id}/withdraw`, { method: "POST" }),
+    request<AdminContentItem>(`/admin/content/${id}/withdraw`, {
+      method: "POST",
+    }),
 
   setConsent: (id: string, scope: ConsentScope) =>
-    request<AdminContentItem>(`/admin/content/${id}/consent`, { method: "PUT" }, { scope }),
+    request<AdminContentItem>(
+      `/admin/content/${id}/consent`,
+      { method: "PUT" },
+      { scope },
+    ),
 
   deleteContent: (id: string) =>
     request<void>(`/admin/content/${id}`, { method: "DELETE" }),
