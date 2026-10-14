@@ -153,6 +153,25 @@ jobs:
         run: npm test
 
   # ---------------------------------------------------------------------------
+  # Comprueba que `.gitignore` no esté descartando código fuente, y que las
+  # reglas que protegen el material del archivo sigan en pie.
+  #
+  # No es una precaución teórica: las reglas `archive/` y `media/`, escritas sin
+  # barra inicial para proteger el material a cualquier profundidad, dejaron
+  # `app/modules/archive/` y `app/modules/media/` fuera del repositorio. En
+  # local no se notaba —los archivos estaban en el disco— y ruff tampoco decía
+  # nada, porque respeta `.gitignore` y saltaba esos módulos en silencio.
+  integridad:
+    name: Repositorio · integridad
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ningún archivo de código ignorado
+        run: ./scripts/verificar-integridad-repo.sh
+
+  # ---------------------------------------------------------------------------
   infra:
     name: Infraestructura · formato y validación
     runs-on: ubuntu-latest

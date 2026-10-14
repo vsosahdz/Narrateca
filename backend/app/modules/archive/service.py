@@ -92,9 +92,7 @@ class ArchiveService:
         """
         report = ScanReport(root=str(self.root))
 
-        known_themes = {
-            slug for (slug,) in (await self.session.execute(select(Theme.slug))).all()
-        }
+        known_themes = {slug for (slug,) in (await self.session.execute(select(Theme.slug))).all()}
 
         existing = {
             document.relative_path: document

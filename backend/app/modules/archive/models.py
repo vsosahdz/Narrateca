@@ -42,9 +42,7 @@ class DocumentStatus(enum.StrEnum):
 
 class ArchiveDocument(Base, TimestampMixin):
     __tablename__ = "archive_documents"
-    __table_args__ = (
-        Index("ix_archive_documents_theme_status", "theme_slug", "status"),
-    )
+    __table_args__ = (Index("ix_archive_documents_theme_status", "theme_slug", "status"),)
 
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 

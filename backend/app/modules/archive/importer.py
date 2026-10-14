@@ -86,16 +86,15 @@ class ArchiveImporter:
         report = ImportReport()
 
         stmt = select(ArchiveDocument).where(
-            ArchiveDocument.status.in_(
-                [DocumentStatus.DISCOVERED, DocumentStatus.FAILED]
-            )
+            ArchiveDocument.status.in_([DocumentStatus.DISCOVERED, DocumentStatus.FAILED])
         )
         if theme_slug:
             stmt = stmt.where(ArchiveDocument.theme_slug == theme_slug)
         if document_ids is not None:
             stmt = stmt.where(ArchiveDocument.id.in_(list(document_ids)))
 
-        result = await self.session.execute(stmt.order_by(ArchiveDocument.relative_path).limit(limit))
+        stmt = stmt.order_by(ArchiveDocument.relative_path).limit(limit)
+        result = await self.session.execute(stmt)
         documents = list(result.scalars().all())
 
         themes = {

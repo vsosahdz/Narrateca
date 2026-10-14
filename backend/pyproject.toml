@@ -32,7 +32,11 @@ dev = [
     "pytest>=8.3",
     "pytest-asyncio>=0.24",
     "pytest-cov>=6.0",
-    "ruff>=0.8",
+    # Versión fijada a propósito. Un rango abierto hace que la integración
+    # continua instale la última publicada mientras en local sigue otra, así
+    # que el linter aprueba aquí y rechaza allá sin que el código haya
+    # cambiado. Ya pasó con la clasificación de importaciones.
+    "ruff==0.17.0",
 ]
 
 [build-system]
