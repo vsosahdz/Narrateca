@@ -63,3 +63,9 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_accounts_email'), table_name='accounts')
     op.drop_table('accounts')
     # ### end Alembic commands ###
+
+    # `drop_table` no borra el tipo enumerado que `sa.Enum` creó al aplicar la
+    # migración: el tipo sobrevive a su tabla. Al volver a aplicar, PostgreSQL
+    # responde `type "account_role" already exists` y la migración falla.
+    # Alembic no genera estas líneas; hay que escribirlas.
+    op.execute('DROP TYPE IF EXISTS account_role')

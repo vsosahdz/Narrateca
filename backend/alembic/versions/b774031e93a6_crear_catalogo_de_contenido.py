@@ -109,3 +109,15 @@ def downgrade() -> None:
     op.drop_index("ix_content_items_consent_scope", table_name="content_items")
     op.drop_table("content_items")
     # ### end Alembic commands ###
+
+    # Los cinco tipos enumerados que creó `upgrade`. Sin esto, la secuencia
+    # `upgrade head` → `downgrade base` → `upgrade head` falla con
+    # `type "content_type" already exists`.
+    for tipo in (
+        "content_type",
+        "publication_status",
+        "consent_scope",
+        "attribution",
+        "sensitivity",
+    ):
+        op.execute(f"DROP TYPE IF EXISTS {tipo}")

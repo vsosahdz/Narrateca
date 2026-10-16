@@ -67,3 +67,8 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_archive_documents_content_hash'), table_name='archive_documents')
     op.drop_table('archive_documents')
     # ### end Alembic commands ###
+
+    # Solo `document_status`, que nace aquí. `content_type` se reutiliza del
+    # catálogo —por eso arriba lleva `create_type=False`— y borrarlo dejaría
+    # rota la migración que sí lo creó.
+    op.execute('DROP TYPE IF EXISTS document_status')

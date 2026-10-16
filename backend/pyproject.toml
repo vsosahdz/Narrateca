@@ -55,6 +55,12 @@ addopts = "-q"
 line-length = 100
 target-version = "py312"
 
+# Las migraciones las escribe Alembic, no una persona. Vienen con líneas de 150
+# columnas y las importaciones en su propio orden. Reformatearlas no mejora
+# nada y sí toca archivos que ya se aplicaron sobre bases de datos reales, que
+# es justo lo que no conviene hacer por estética.
+extend-exclude = ["alembic/versions"]
+
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
 
