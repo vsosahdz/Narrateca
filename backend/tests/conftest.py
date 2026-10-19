@@ -33,6 +33,7 @@ from app.core.security import hash_password
 from app.core.storage import LocalStorage, get_storage
 from app.main import app
 from app.modules.admin.models import Account, Role
+from app.modules.chat.llm import EchoLanguageModel, get_language_model
 from app.modules.content.indexing import (
     NullIndexSynchronizer,
     get_index_synchronizer,
@@ -119,6 +120,18 @@ def storage(tmp_path_factory: pytest.TempPathFactory) -> LocalStorage:
 
 
 @pytest.fixture
+def language_model() -> EchoLanguageModel:
+    """Proveedor de lenguaje falso, que registra lo que se le pide.
+
+    Ninguna prueba habla con un servicio externo. Además de ser más rápido, es
+    la única forma de verificar el requisito de minimización: las pruebas
+    inspeccionan `language_model.llamadas` para comprobar qué salió del sistema
+    y qué no.
+    """
+    return EchoLanguageModel()
+
+
+@pytest.fixture
 def indexer() -> NullIndexSynchronizer:
     """Sincronizador de índice espía.
 
@@ -155,7 +168,10 @@ async def _make_account(
 
 @pytest.fixture
 async def app_clients(
-    session: AsyncSession, indexer: NullIndexSynchronizer, storage: LocalStorage
+    session: AsyncSession,
+    indexer: NullIndexSynchronizer,
+    storage: LocalStorage,
+    language_model: EchoLanguageModel,
 ) -> AsyncGenerator[Callable[[], AbstractAsyncContextManager[httpx.AsyncClient]], None]:
     """Fábrica de clientes HTTP independientes contra la aplicación.
 
@@ -175,6 +191,7 @@ async def app_clients(
     app.dependency_overrides[get_session] = override_get_session
     app.dependency_overrides[get_index_synchronizer] = lambda: indexer
     app.dependency_overrides[get_storage] = lambda: storage
+    app.dependency_overrides[get_language_model] = lambda: language_model
 
     stack = AsyncExitStack()
 

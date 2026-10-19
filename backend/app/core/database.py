@@ -5,15 +5,32 @@ misma base mediante pgvector y es reconstruible por completo desde aquí
 (ver spec `rag-ingestion`, requisito de reconstrucción).
 """
 
+import enum
 from collections.abc import AsyncGenerator
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import DateTime, MetaData, func
+from sqlalchemy import DateTime, Enum, MetaData, func
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from app.core.config import settings
+
+
+def pg_enum(enum_cls: type[enum.Enum], name: str) -> Enum:
+    """Enum de PostgreSQL que almacena el *valor*, no el nombre del miembro.
+
+    Sin `values_callable`, SQLAlchemy guarda el nombre del miembro —`DRAFT`—
+    mientras el código compara contra su valor —`draft`—, y la base rechaza la
+    inserción con `invalid input value for enum`. El error aparece al sembrar,
+    no al definir el modelo, que es lo que lo hace molesto de diagnosticar.
+    """
+    return Enum(
+        enum_cls,
+        name=name,
+        values_callable=lambda members: [member.value for member in members],
+    )
+
 
 # Convención de nombres explícita para que las migraciones de Alembic generen
 # nombres estables de índices y restricciones en lugar de nombres aleatorios.

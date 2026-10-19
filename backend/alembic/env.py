@@ -21,6 +21,7 @@ from app.core.database import Base
 # que Alembic no verá.
 from app.modules.admin import models as admin_models  # noqa: F401
 from app.modules.archive import models as archive_models  # noqa: F401
+from app.modules.chat import models as chat_models  # noqa: F401
 from app.modules.content import models as content_models  # noqa: F401
 from app.modules.rag import models as rag_models  # noqa: F401
 from app.modules.team import models as team_models  # noqa: F401

@@ -92,10 +92,25 @@ app.add_middleware(
 )
 
 
+def status_for(exc: DomainError) -> int:
+    """Código HTTP de un error de dominio, respetando la herencia.
+
+    Se recorre la jerarquía en lugar de buscar el tipo exacto. Con búsqueda
+    exacta, una subclase —por ejemplo `PersonaNotAvailableError`, que extiende
+    `PermissionDeniedError`— no aparecía en el mapa y caía al 400 genérico. El
+    síntoma es engañoso: la aplicación responde, pero con un código que dice
+    «tu petición está mal formada» cuando lo que ocurre es que no tienes
+    permiso.
+    """
+    for clase in type(exc).__mro__:
+        if clase in ERROR_STATUS:
+            return ERROR_STATUS[clase]
+    return status.HTTP_400_BAD_REQUEST
+
+
 @app.exception_handler(DomainError)
 async def domain_error_handler(_: Request, exc: DomainError) -> JSONResponse:
-    code = ERROR_STATUS.get(type(exc), status.HTTP_400_BAD_REQUEST)
-    return JSONResponse(status_code=code, content={"detail": exc.message})
+    return JSONResponse(status_code=status_for(exc), content={"detail": exc.message})
 
 
 # Entrega de media en desarrollo local. El material sensible NO se sirve como

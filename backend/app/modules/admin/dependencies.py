@@ -53,6 +53,24 @@ async def get_current_account(
     return account
 
 
+async def get_optional_account(
+    request: Request,
+    session: AsyncSession = Depends(get_session),
+) -> Account | None:
+    """La cuenta autenticada, o `None` si no hay sesión.
+
+    Para endpoints públicos cuyo comportamiento cambia si quien pregunta
+    pertenece al equipo. El caso concreto es el chatbot: una narradora en
+    estado `draft` acepta conversación de una cuenta de administración y la
+    rechaza del público, y eso no puede resolverse exigiendo sesión —el
+    endpoint es público— ni ignorándola.
+    """
+    try:
+        return await get_current_account(request, session)
+    except NotAuthenticatedError:
+        return None
+
+
 async def require_admin(account: Account = Depends(get_current_account)) -> Account:
     """Exige rol de administrador.
 

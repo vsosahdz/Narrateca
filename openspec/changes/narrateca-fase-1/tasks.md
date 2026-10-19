@@ -150,23 +150,23 @@
 
 *Depende del grupo 10. ⚖️ La elección de proveedor depende de la tarea 3.1.*
 
-- [ ] 11.1 🔒 Definir la interfaz del proveedor de modelo de lenguaje con implementación seleccionable y punto de conexión configurable
-- [ ] 11.2 Implementar el adaptador del proveedor elegido y verificar que cambiar de proveedor no requiere tocar recuperación, citación ni persistencia
-- [ ] 11.3 🔒 Modelar `PersonaConfig` por tema con prompt de sistema, corpus, política de voz, política de seguridad, idioma y estado de activación
-- [ ] 11.4 Registrar la política de voz de las cuatro comunidades, con voz femenina exclusiva para los temas de mujeres, aunque la síntesis no se implemente en esta fase
-- [ ] 11.5 🔒 Implementar los estados de activación `draft`, `coming_soon` y `active`, independientes entre comunidades
-- [ ] 11.6 Implementar la página del chatbot con selector que muestra las cuatro comunidades y señala las no disponibles
-- [ ] 11.7 🔒 Implementar la recuperación filtrada por tema y por consentimiento
-- [ ] 11.8 🔒 Redactar y ajustar el prompt de sistema de la narradora anclada: primera persona del colectivo, sin inventar hechos, sin biografía individual
-- [ ] 11.9 Implementar la respuesta de ausencia de material cuando la recuperación no devuelve fragmentos suficientemente relevantes
-- [ ] 11.10 Implementar la citación en línea con fragmento textual y enlace a la pieza de origen, verificando que los enlaces apuntan a piezas publicadas
-- [ ] 11.11 Implementar la detección de idioma y la respuesta en español o inglés sobre corpus en español
-- [ ] 11.12 Implementar la presentación de citas en español con traducción identificada cuando la respuesta esté en inglés
-- [ ] 11.13 ⚖️ Redactar con el equipo de investigación el mensaje de contención ante revelaciones personales
-- [ ] 11.14 Implementar la detección de revelación personal y la emisión del mensaje de contención, sin consejo clínico, legal ni terapéutico
-- [ ] 11.15 Implementar la transmisión progresiva de la respuesta desde el backend hasta la interfaz
-- [ ] 11.16 Verificar que cada solicitud al proveedor contiene únicamente prompt de sistema, historial de la conversación y fragmentos recuperados
-- [ ] 11.17 Escribir las pruebas de los escenarios de `chat-personas`, con énfasis en anclaje, citación y minimización de datos enviados
+- [x] 11.1 🔒 Definir la interfaz del proveedor de modelo de lenguaje con implementación seleccionable y punto de conexión configurable
+- [x] 11.2 Implementar el adaptador del proveedor elegido y verificar que cambiar de proveedor no requiere tocar recuperación, citación ni persistencia
+- [x] 11.3 🔒 Modelar `PersonaConfig` por tema con prompt de sistema, corpus, política de voz, política de seguridad, idioma y estado de activación
+- [x] 11.4 Registrar la política de voz de las cuatro comunidades, con voz femenina exclusiva para los temas de mujeres, aunque la síntesis no se implemente en esta fase
+- [x] 11.5 🔒 Implementar los estados de activación `draft`, `coming_soon` y `active`, independientes entre comunidades
+- [ ] 11.6 ⏸ Implementar la página del chatbot con selector que muestra las cuatro comunidades y señala las no disponibles *(a la espera del export de Stitch)*
+- [x] 11.7 🔒 Implementar la recuperación filtrada por tema y por consentimiento
+- [x] 11.8 🔒 Redactar y ajustar el prompt de sistema de la narradora anclada: primera persona del colectivo, sin inventar hechos, sin biografía individual
+- [x] 11.9 Implementar la respuesta de ausencia de material cuando la recuperación no devuelve fragmentos suficientemente relevantes
+- [x] 11.10 Implementar la citación en línea con fragmento textual y enlace a la pieza de origen, verificando que los enlaces apuntan a piezas publicadas
+- [x] 11.11 Implementar la detección de idioma y la respuesta en español o inglés sobre corpus en español
+- [x] 11.12 Implementar la presentación de citas en español con traducción identificada cuando la respuesta esté en inglés
+- [ ] 11.13 ⚖️ Redactar con el equipo de investigación el mensaje de contención ante revelaciones personales *(el mecanismo está hecho y es configurable por comunidad; falta la redacción aprobada)*
+- [x] 11.14 Implementar la detección de revelación personal y la emisión del mensaje de contención, sin consejo clínico, legal ni terapéutico
+- [x] 11.15 Implementar la transmisión progresiva de la respuesta desde el backend hasta la interfaz
+- [x] 11.16 Verificar que cada solicitud al proveedor contiene únicamente prompt de sistema, historial de la conversación y fragmentos recuperados
+- [x] 11.17 Escribir las pruebas de los escenarios de `chat-personas`, con énfasis en anclaje, citación y minimización de datos enviados
 
 ## 12. Persistencia de conversaciones
 

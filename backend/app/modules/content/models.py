@@ -13,7 +13,6 @@ from datetime import date, datetime
 from sqlalchemy import (
     Date,
     DateTime,
-    Enum,
     ForeignKey,
     Index,
     String,
@@ -23,7 +22,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.core.database import Base, TimestampMixin
+from app.core.database import Base, TimestampMixin, pg_enum
 from app.modules.themes.models import Theme
 
 
@@ -81,15 +80,6 @@ class PublicationStatus(enum.StrEnum):
     WITHDRAWN = "withdrawn"
 
 
-def _pg_enum(enum_cls: type[enum.Enum], name: str) -> Enum:
-    """Enum de PostgreSQL que almacena el *valor*, no el nombre del miembro."""
-    return Enum(
-        enum_cls,
-        name=name,
-        values_callable=lambda members: [member.value for member in members],
-    )
-
-
 class ContentItem(Base, TimestampMixin):
     __tablename__ = "content_items"
     __table_args__ = (
@@ -107,7 +97,7 @@ class ContentItem(Base, TimestampMixin):
     )
     theme: Mapped[Theme] = relationship(lazy="joined")
 
-    type: Mapped[ContentType] = mapped_column(_pg_enum(ContentType, "content_type"), nullable=False)
+    type: Mapped[ContentType] = mapped_column(pg_enum(ContentType, "content_type"), nullable=False)
 
     #: Identificador legible para la dirección pública de la pieza.
     slug: Mapped[str] = mapped_column(String(160), nullable=False)
@@ -119,7 +109,7 @@ class ContentItem(Base, TimestampMixin):
 
     # --- Publicación --------------------------------------------------------
     status: Mapped[PublicationStatus] = mapped_column(
-        _pg_enum(PublicationStatus, "publication_status"),
+        pg_enum(PublicationStatus, "publication_status"),
         nullable=False,
         default=PublicationStatus.DRAFT,
     )
@@ -129,7 +119,7 @@ class ContentItem(Base, TimestampMixin):
     #: Por defecto `no_ai`: incorporar una pieza al chatbot es siempre una
     #: decisión explícita, nunca un efecto secundario de importar o publicar.
     consent_scope: Mapped[ConsentScope] = mapped_column(
-        _pg_enum(ConsentScope, "consent_scope"),
+        pg_enum(ConsentScope, "consent_scope"),
         nullable=False,
         default=ConsentScope.NO_AI,
         server_default=ConsentScope.NO_AI.value,
@@ -137,7 +127,7 @@ class ContentItem(Base, TimestampMixin):
 
     # --- Atribución ---------------------------------------------------------
     attribution: Mapped[Attribution] = mapped_column(
-        _pg_enum(Attribution, "attribution"),
+        pg_enum(Attribution, "attribution"),
         nullable=False,
         default=Attribution.ANONYMOUS,
     )
@@ -147,7 +137,7 @@ class ContentItem(Base, TimestampMixin):
     pseudonym: Mapped[str | None] = mapped_column(String(200))
 
     sensitivity: Mapped[Sensitivity] = mapped_column(
-        _pg_enum(Sensitivity, "sensitivity"),
+        pg_enum(Sensitivity, "sensitivity"),
         nullable=False,
         default=Sensitivity.NORMAL,
     )

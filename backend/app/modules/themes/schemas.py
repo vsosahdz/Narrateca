@@ -8,7 +8,6 @@ import uuid
 
 from pydantic import BaseModel, ConfigDict, Field
 
-
 # Misma ortografía que los slugs de contenido: minúsculas, dígitos y guion
 # medio. Ambos aparecen en la misma URL pública —`/es/temas/<tema>` y
 # `/es/contenido/<pieza>`— y que uno usara guion bajo y el otro guion medio era

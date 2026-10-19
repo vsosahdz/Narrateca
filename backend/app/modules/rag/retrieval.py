@@ -209,7 +209,24 @@ class HybridRetriever:
         ]
 
         has_material, motivo = self._judge(recuperados, min_coverage, len(lexemas))
-        return RetrievalResult(recuperados if has_material else [], has_material, motivo)
+        if not has_material:
+            return RetrievalResult([], False, motivo)
+
+        # El juicio es sobre el conjunto, pero lo que se entrega es cada
+        # fragmento. Un fragmento que no comparte **ninguna** palabra con la
+        # pregunta entró solo por vecindad vectorial, y el vecindario de este
+        # corpus es ancho: medido, un texto sobre una receta de cocina puntúa
+        # 0.797 contra uno relevante que puntúa 0.807.
+        #
+        # Dejarlo pasar no violaría la minimización —se recuperó— pero sí el
+        # anclaje: es material ajeno a la pregunta puesto delante del modelo,
+        # que es justo la materia prima de una respuesta inventada.
+        #
+        # Se descarta solo la cobertura cero, no la baja: exigir más dejaría
+        # fuera fragmentos que aportan contexto legítimo alrededor del que sí
+        # coincide.
+        con_coincidencia = [c for c in recuperados if c.lexical_coverage > 0]
+        return RetrievalResult(con_coincidencia, True, None)
 
     def _judge(
         self, chunks: list[RetrievedChunk], min_coverage: float, total_terms: int
