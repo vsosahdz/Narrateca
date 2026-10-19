@@ -84,10 +84,10 @@ async def test_alta_de_tema_no_deja_trabajo_pendiente(session: AsyncSession) -> 
 
     await service.create(
         ThemeCreate(
-            slug="prueba_limite",
+            slug="prueba-limite",
             name_es="Prueba",
             name_en="Test",
-            accent_token="prueba_limite",
+            accent_token="prueba-limite",
         )
     )
 

@@ -36,7 +36,7 @@
   --on-accent: #ffffff;
 }
 
-[data-theme="mujeres_discapacidad"] {
+[data-theme="mujeres-discapacidad"] {
   /* Versión oscurecida del verde azulado de marca: #008080 no alcanza el
      mínimo de contraste como texto sobre fondo claro. */
   --accent: #00615f;
@@ -45,7 +45,7 @@
   --on-accent: #ffffff;
 }
 
-[data-theme="mujeres_violencia"] {
+[data-theme="mujeres-violencia"] {
   --accent: #8e2450;
   --accent-strong: #6b1b3c;
   --accent-soft: #f8e9ef;

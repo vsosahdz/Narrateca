@@ -57,8 +57,8 @@ async def test_incluye_las_cuatro_comunidades_aunque_esten_vacias(
     assert {t["theme_slug"] for t in data["themes"]} == {
         "migrantes",
         "lgbtq",
-        "mujeres_discapacidad",
-        "mujeres_violencia",
+        "mujeres-discapacidad",
+        "mujeres-violencia",
     }
     assert all(t["total"] == 0 for t in data["themes"])
 

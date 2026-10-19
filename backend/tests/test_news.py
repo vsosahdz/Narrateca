@@ -101,7 +101,7 @@ async def test_las_noticias_se_filtran_por_tema(client: httpx.AsyncClient) -> No
 
 async def test_tema_sin_noticias_devuelve_lista_vacia(client: httpx.AsyncClient) -> None:
     """La página temática omite la sección cuando esto ocurre."""
-    noticias = (await client.get(NEWS, params={"theme": "mujeres_violencia"})).json()
+    noticias = (await client.get(NEWS, params={"theme": "mujeres-violencia"})).json()
     assert noticias == []
 
 

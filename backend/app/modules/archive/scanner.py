@@ -90,10 +90,22 @@ def is_ignored(path: Path) -> bool:
     return path.name.startswith(IGNORED_PREFIXES)
 
 
+def normalize_theme_folder(folder: str) -> str:
+    """Convierte el nombre de una carpeta de comunidad en el slug del tema.
+
+    Los slugs de tema usan guion medio (`mujeres-discapacidad`). Las carpetas
+    del archivo que ya existen en disco usan guion bajo, porque así se llamaban
+    los slugs antes. Se aceptan ambas grafías a propósito: renombrar carpetas
+    que contienen material bajo acuerdo de confidencialidad es una operación
+    que debe decidir el equipo, no imponer un cambio de convención interna.
+    """
+    return folder.strip().lower().replace("_", "-")
+
+
 def classify(relative: Path) -> tuple[str, ContentType | None]:
     """Deduce tema y tipo a partir de la ruta relativa."""
     parts = relative.parts
-    theme_slug = parts[0] if parts else ""
+    theme_slug = normalize_theme_folder(parts[0]) if parts else ""
 
     if len(parts) > 2:
         folder = parts[1].lower()

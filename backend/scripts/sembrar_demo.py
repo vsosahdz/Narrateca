@@ -33,8 +33,8 @@ CREDENCIALES = {
 ACENTOS = {
     "migrantes": (140, 74, 31),
     "lgbtq": (90, 62, 155),
-    "mujeres_discapacidad": (16, 96, 92),
-    "mujeres_violencia": (150, 35, 74),
+    "mujeres-discapacidad": (16, 96, 92),
+    "mujeres-violencia": (150, 35, 74),
 }
 
 
@@ -176,7 +176,7 @@ PIEZAS: list[dict] = [
     ),
     # --- Mujeres con discapacidad -------------------------------------------
     dict(
-        theme_slug="mujeres_discapacidad", type="testimony", slug="la-rampa-que-no-existia",
+        theme_slug="mujeres-discapacidad", type="testimony", slug="la-rampa-que-no-existia",
         title="La rampa que no existía",
         summary="Sobre estudiar en un campus que no fue pensado para una.",
         body=(
@@ -191,7 +191,7 @@ PIEZAS: list[dict] = [
         recorded_on="2024-02-06",
     ),
     dict(
-        theme_slug="mujeres_discapacidad", type="interview", slug="el-diagnostico-tardio",
+        theme_slug="mujeres-discapacidad", type="interview", slug="el-diagnostico-tardio",
         title="Sobre el diagnóstico tardío",
         summary="Conversación acerca de los años previos a tener un nombre para lo que pasaba.",
         body=(
@@ -205,7 +205,7 @@ PIEZAS: list[dict] = [
         attribution="anonymous", consent_scope="public",
     ),
     dict(
-        theme_slug="mujeres_discapacidad", type="photo", slug="la-entrada-de-servicio",
+        theme_slug="mujeres-discapacidad", type="photo", slug="la-entrada-de-servicio",
         title="La entrada de servicio",
         summary="Durante dos años, la única accesible.",
         attribution="anonymous", consent_scope="site_only", foto=True,
@@ -213,7 +213,7 @@ PIEZAS: list[dict] = [
     ),
     # --- Mujeres y violencia de género --------------------------------------
     dict(
-        theme_slug="mujeres_violencia", type="testimony", slug="el-dia-que-me-creyeron",
+        theme_slug="mujeres-violencia", type="testimony", slug="el-dia-que-me-creyeron",
         title="El día que me creyeron",
         summary="Sobre la primera vez que alguien no pidió pruebas.",
         body=(
@@ -226,7 +226,7 @@ PIEZAS: list[dict] = [
         recorded_on="2024-06-20",
     ),
     dict(
-        theme_slug="mujeres_violencia", type="interview", slug="acompanar-procesos",
+        theme_slug="mujeres-violencia", type="interview", slug="acompanar-procesos",
         title="Acompañar procesos legales",
         summary="Conversación con quien acompaña a mujeres en denuncias.",
         body=(
@@ -240,7 +240,7 @@ PIEZAS: list[dict] = [
         attribution="pseudonym", pseudonym="Marta", consent_scope="public",
     ),
     dict(
-        theme_slug="mujeres_violencia", type="news_post", slug="taller-de-documentacion",
+        theme_slug="mujeres-violencia", type="news_post", slug="taller-de-documentacion",
         title="Taller de documentación con organizaciones locales",
         summary="Sesión de trabajo sobre registro y resguardo de testimonios.",
         body="El taller reunió a seis organizaciones de la zona metropolitana.",

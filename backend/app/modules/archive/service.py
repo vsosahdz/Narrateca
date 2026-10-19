@@ -210,8 +210,16 @@ class ArchiveService:
 
         created: list[str] = []
         for slug in theme_slugs:
+            # Si ya existe la carpeta con la grafía antigua —guion bajo, como se
+            # llamaban los slugs antes— se respeta y se trabaja dentro. Crear
+            # `mujeres-discapacidad/` al lado de `mujeres_discapacidad/` dejaría
+            # dos árboles para la misma comunidad y material repartido entre los
+            # dos sin que nadie sepa cuál es el bueno.
+            heredada = self.root / slug.replace("-", "_")
+            carpeta_tema = heredada if heredada.is_dir() else self.root / slug
+
             for folder in sorted(CANONICAL_FOLDERS.values()):
-                path = self.root / slug / folder
+                path = carpeta_tema / folder
                 if not path.exists():
                     path.mkdir(parents=True, exist_ok=True)
                     # Marcador para que la carpeta vacía sobreviva a un copiado

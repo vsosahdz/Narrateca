@@ -44,7 +44,7 @@ async def test_material_sensible_va_al_ambito_privado(client: httpx.AsyncClient)
     """La separación ocurre en la ruta, no solo en un campo de la base."""
     result = await subir(
         client,
-        theme_slug="mujeres_violencia",
+        theme_slug="mujeres-violencia",
         sensitivity="high",
         file=("testimonio.mp4", b"\x00" * 64, "video/mp4"),
     )
@@ -90,14 +90,14 @@ async def test_subir_requiere_sesion(anon_client: httpx.AsyncClient) -> None:
 async def _pieza_sensible(client: httpx.AsyncClient) -> tuple[str, str]:
     subida = await subir(
         client,
-        theme_slug="mujeres_violencia",
+        theme_slug="mujeres-violencia",
         sensitivity="high",
         file=("t.mp4", b"\x00" * 64, "video/mp4"),
     )
     creada = await client.post(
         CONTENT,
         json={
-            "theme_slug": "mujeres_violencia",
+            "theme_slug": "mujeres-violencia",
             "type": "video",
             "slug": "video-sensible",
             "title": "Video sensible",

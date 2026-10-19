@@ -4,10 +4,12 @@ Cubren el requisito de `content-catalog` sobre que los temas sean datos: dar de
 alta una comunidad nueva no debe requerir cambios de código.
 """
 
+import re
+
 import httpx
 import pytest
 
-THEME_SLUGS = {"migrantes", "lgbtq", "mujeres_discapacidad", "mujeres_violencia"}
+THEME_SLUGS = {"migrantes", "lgbtq", "mujeres-discapacidad", "mujeres-violencia"}
 
 
 async def test_health(client: httpx.AsyncClient) -> None:
@@ -84,7 +86,10 @@ async def test_el_acento_es_un_token_no_un_color(client: httpx.AsyncClient) -> N
     for theme in response.json():
         accent = theme["accent_token"]
         assert not accent.startswith("#"), f"{theme['slug']} guarda un color literal"
-        assert accent.isidentifier() or "_" in accent
+        # Un nombre de token, no un valor: minúsculas, dígitos y guion medio.
+        assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", accent), (
+            f"{theme['slug']} no guarda un nombre de token"
+        )
 
 
 async def test_detalle_por_slug(client: httpx.AsyncClient) -> None:
@@ -104,10 +109,10 @@ async def test_alta_de_una_quinta_comunidad_sin_cambios_de_codigo(
 ) -> None:
     """Escenario de `content-catalog`: alta de una comunidad nueva."""
     payload = {
-        "slug": "personas_mayores",
+        "slug": "personas-mayores",
         "name_es": "Personas mayores",
         "name_en": "Older adults",
-        "accent_token": "personas_mayores",
+        "accent_token": "personas-mayores",
         "position": 5,
     }
 
@@ -115,7 +120,7 @@ async def test_alta_de_una_quinta_comunidad_sin_cambios_de_codigo(
     assert created.status_code == 201
 
     listed = await client.get("/api/v1/themes")
-    assert "personas_mayores" in {theme["slug"] for theme in listed.json()}
+    assert "personas-mayores" in {theme["slug"] for theme in listed.json()}
 
 
 async def test_slug_duplicado_devuelve_conflicto(client: httpx.AsyncClient) -> None:
@@ -130,7 +135,21 @@ async def test_slug_duplicado_devuelve_conflicto(client: httpx.AsyncClient) -> N
     assert response.status_code == 409
 
 
-@pytest.mark.parametrize("slug", ["Con Mayúsculas", "con-guiones", "con espacio", ""])
+@pytest.mark.parametrize(
+    "slug",
+    [
+        "Con Mayúsculas",
+        "con espacio",
+        "",
+        # El guion bajo se rechaza desde que los slugs de tema se unificaron con
+        # los de contenido. Admitir las dos grafías habría dejado la
+        # unificación en papel mojado: el próximo tema volvería a traer la otra.
+        "con_guion_bajo",
+        "-empieza-con-guion",
+        "termina-con-guion-",
+        "doble--guion",
+    ],
+)
 async def test_slug_invalido_es_rechazado(client: httpx.AsyncClient, slug: str) -> None:
     """El slug se usa en rutas y como partición del índice vectorial."""
     response = await client.post(

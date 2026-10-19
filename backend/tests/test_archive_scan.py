@@ -19,7 +19,7 @@ from app.modules.content.models import ContentType
 
 @pytest.fixture
 def archive_root(tmp_path: Path) -> Path:
-    for theme in ("migrantes", "lgbtq", "mujeres_discapacidad", "mujeres_violencia"):
+    for theme in ("migrantes", "lgbtq", "mujeres-discapacidad", "mujeres-violencia"):
         for folder in ("testimonios", "entrevistas", "fotografias", "videos"):
             (tmp_path / theme / folder).mkdir(parents=True, exist_ok=True)
     return tmp_path
@@ -50,6 +50,23 @@ def write(root: Path, relative: str, content: str = "contenido") -> Path:
 )
 def test_clasificacion_por_ruta(ruta: str, tema: str, tipo: ContentType) -> None:
     assert classify(Path(ruta)) == (tema, tipo)
+
+
+@pytest.mark.parametrize(
+    "carpeta",
+    ["mujeres-discapacidad", "mujeres_discapacidad", "Mujeres_Discapacidad"],
+)
+def test_la_carpeta_de_comunidad_admite_la_grafia_antigua(carpeta: str) -> None:
+    """Una carpeta con guion bajo sigue resolviendo al tema renombrado.
+
+    Los slugs de tema pasaron de `mujeres_discapacidad` a
+    `mujeres-discapacidad`, pero el material ya depositado vive en carpetas con
+    la grafía antigua. Renombrar carpetas que contienen material bajo acuerdo
+    de confidencialidad es una operación que decide el equipo de investigación,
+    no un efecto colateral de unificar una convención interna.
+    """
+    tema, _ = classify(Path(f"{carpeta}/testimonios/t.txt"))
+    assert tema == "mujeres-discapacidad"
 
 
 def test_la_carpeta_manda_sobre_la_extension() -> None:

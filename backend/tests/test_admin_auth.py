@@ -143,7 +143,7 @@ async def test_editor_no_opera_fuera_de_su_tema(editor_client) -> None:
     """Escenario: un editor de migrantes intenta tocar mujeres y violencia."""
     client = await editor_client(["migrantes"])
 
-    response = await client.post(ADMIN_CONTENT, json=content_payload("mujeres_violencia"))
+    response = await client.post(ADMIN_CONTENT, json=content_payload("mujeres-violencia"))
     assert response.status_code == 403
 
 
@@ -181,12 +181,12 @@ async def test_editor_con_varios_temas(editor_client) -> None:
         await client.post(ADMIN_CONTENT, json=content_payload("lgbtq", slug="b"))
     ).status_code == 201
     assert (
-        await client.post(ADMIN_CONTENT, json=content_payload("mujeres_discapacidad", slug="c"))
+        await client.post(ADMIN_CONTENT, json=content_payload("mujeres-discapacidad", slug="c"))
     ).status_code == 403
 
 
 @pytest.mark.parametrize(
-    "theme", ["migrantes", "lgbtq", "mujeres_discapacidad", "mujeres_violencia"]
+    "theme", ["migrantes", "lgbtq", "mujeres-discapacidad", "mujeres-violencia"]
 )
 async def test_administrador_opera_en_cualquier_tema(client: httpx.AsyncClient, theme: str) -> None:
     """Escenario: el rol admin alcanza a las cuatro comunidades."""

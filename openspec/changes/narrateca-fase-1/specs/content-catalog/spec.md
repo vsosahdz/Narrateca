@@ -10,7 +10,7 @@ Los valores de `type` DEBEN incluir al menos: `photo`, `testimony`, `video`, `in
 `news_post`, `curated_link` y `geo_item`.
 
 Los valores de `theme` DEBEN incluir al menos: `migrantes`, `lgbtq`,
-`mujeres_discapacidad` y `mujeres_violencia`.
+`mujeres-discapacidad` y `mujeres-violencia`.
 
 #### Scenario: Alta de contenido en cualquier tema
 

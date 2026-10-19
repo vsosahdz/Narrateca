@@ -45,7 +45,7 @@ async def test_cualquier_tipo_en_cualquier_tema(
 ) -> None:
     """Un solo ContentItem sirve a los cuatro temas y a todos los tipos."""
     for index, theme in enumerate(
-        ["migrantes", "lgbtq", "mujeres_discapacidad", "mujeres_violencia"]
+        ["migrantes", "lgbtq", "mujeres-discapacidad", "mujeres-violencia"]
     ):
         item = await crear(
             client,

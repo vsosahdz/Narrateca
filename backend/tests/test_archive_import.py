@@ -20,7 +20,7 @@ from app.modules.content.models import ConsentScope, ContentItem, ContentType, P
 
 @pytest.fixture
 def archive_root(tmp_path: Path) -> Path:
-    for theme in ("migrantes", "lgbtq", "mujeres_discapacidad"):
+    for theme in ("migrantes", "lgbtq", "mujeres-discapacidad"):
         for folder in ("testimonios", "entrevistas", "videos"):
             (tmp_path / theme / folder).mkdir(parents=True, exist_ok=True)
     return tmp_path
