@@ -9,7 +9,7 @@ import enum
 import uuid
 
 from sqlalchemy import Boolean, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database import Base, TimestampMixin, pg_enum
@@ -106,6 +106,17 @@ class PersonaConfig(Base, TimestampMixin):
     #: general. Lo redacta el equipo de investigación, no el código.
     safety_message_es: Mapped[str | None] = mapped_column(Text)
     safety_message_en: Mapped[str | None] = mapped_column(Text)
+
+    #: Preguntas de ejemplo que se ofrecen antes del primer mensaje.
+    #:
+    #: No son decoración. Sin ellas, la primera pregunta de quien llega cae a
+    #: menudo fuera de lo que el archivo cubre, y el primer encuentro con la
+    #: plataforma es un «no cuento con material sobre eso». Las escribe el
+    #: equipo, que sabe qué hay recogido; cuando están vacías, la API las
+    #: deriva de los títulos de las piezas publicadas.
+    suggested_questions: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, default=list, server_default="[]"
+    )
 
     theme = relationship("Theme", lazy="joined")
 

@@ -18,6 +18,7 @@ con los fragmentos recuperados.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from app.modules.rag.retrieval import RetrievedChunk
@@ -45,8 +46,10 @@ Reglas que debes cumplir siempre:
 4. Si los fragmentos no responden a la pregunta, dilo con claridad: no cuentas
    con material del archivo sobre ese punto. No completes el hueco.
 
-5. Cita apoyándote en los fragmentos entregados, reproduciendo sus palabras
-   cuando sostengas una afirmación.
+5. Cita apoyándote en los fragmentos entregados. Cada fragmento viene con un
+   número entre corchetes: ponlo justo después de la afirmación que se apoya
+   en él, así: «la espera duró meses [2]». Usa solo los números que se te han
+   entregado; no inventes ninguno.
 
 6. No des consejo clínico, legal ni terapéutico. No emitas diagnósticos.
 """.strip()
@@ -69,8 +72,10 @@ Rules you must always follow:
 4. If the fragments do not answer the question, say so plainly: you have no
    material from the archive on that point. Do not fill the gap.
 
-5. Support your statements with the fragments provided, reproducing their words
-   when you rely on them.
+5. Support your statements with the fragments provided. Each fragment comes
+   with a number in brackets: place it right after the statement it supports,
+   like this: "the wait lasted months [2]". Use only the numbers you have been
+   given; do not invent any.
 
 6. Do not give clinical, legal or therapeutic advice. Do not make diagnoses.
 
@@ -153,3 +158,39 @@ def build_context(
 
 def no_material_message(language: str) -> str:
     return SIN_MATERIAL_EN if language == "en" else SIN_MATERIAL_ES
+
+
+#: Un marcador de cita en el texto de la respuesta: `[1]`, `[2]`…
+MARCADOR = re.compile(r"\[(\d{1,2})\]")
+
+
+def sanitize_markers(texto: str, total: int) -> str:
+    """Elimina los marcadores que no correspondan a un fragmento entregado.
+
+    Las citas se presentan como números dentro de la respuesta, y eso descansa
+    en que el modelo los coloque bien. Cuando inventa un `[7]` sobre cuatro
+    fragmentos, la interfaz tendría un enlace que no lleva a ninguna parte.
+
+    Se resuelve en el servidor y no en la interfaz porque es el servidor quien
+    sabe cuántos fragmentos se entregaron. Se borra el marcador y se deja el
+    texto: la frase puede ser correcta aunque la referencia esté mal puesta, y
+    borrar la frase entera sería castigar de más.
+    """
+
+    def _filtrar(coincidencia: re.Match[str]) -> str:
+        numero = int(coincidencia.group(1))
+        return coincidencia.group(0) if 1 <= numero <= total else ""
+
+    limpio = MARCADOR.sub(_filtrar, texto)
+    # El borrado puede dejar espacios dobles o un espacio antes de un punto.
+    limpio = re.sub(r" {2,}", " ", limpio)
+    return re.sub(r" +([.,;:])", r"\1", limpio)
+
+
+def cited_markers(texto: str, total: int) -> set[int]:
+    """Qué fragmentos quedaron efectivamente referenciados en la respuesta."""
+    return {
+        numero
+        for numero in (int(m.group(1)) for m in MARCADOR.finditer(texto))
+        if 1 <= numero <= total
+    }

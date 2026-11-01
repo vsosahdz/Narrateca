@@ -42,6 +42,30 @@ class PersonaRepository:
         )
         return list(result.scalars().all())
 
+    async def published_titles(self, theme_slug: str, *, limit: int = 8) -> list[str]:
+        """Títulos de las piezas publicadas e indexables de una comunidad.
+
+        Alimenta las preguntas sugeridas cuando el equipo aún no ha escrito las
+        suyas. Se filtra por consentimiento además de por publicación: sugerir
+        una pregunta sobre una pieza que el chatbot no puede usar llevaría
+        directo a «no cuento con material».
+        """
+        from app.modules.content.models import INDEXABLE_SCOPES, ContentItem, PublicationStatus
+        from app.modules.themes.models import Theme
+
+        result = await self.session.execute(
+            select(ContentItem.title)
+            .join(Theme, Theme.id == ContentItem.theme_id)
+            .where(
+                Theme.slug == theme_slug,
+                ContentItem.status == PublicationStatus.PUBLISHED,
+                ContentItem.consent_scope.in_(list(INDEXABLE_SCOPES)),
+            )
+            .order_by(ContentItem.created_at.desc())
+            .limit(limit)
+        )
+        return list(result.scalars().all())
+
     async def add(self, persona: PersonaConfig) -> PersonaConfig:
         self.session.add(persona)
         await self.session.flush()

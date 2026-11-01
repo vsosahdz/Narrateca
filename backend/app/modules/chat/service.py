@@ -33,6 +33,7 @@ from app.modules.chat import prompts, safety
 from app.modules.chat.language import detect_language
 from app.modules.chat.llm import GenerationError, LanguageModel, Message
 from app.modules.chat.models import ActivationState, PersonaConfig
+from app.modules.chat.reception import suggestions_for
 from app.modules.chat.repository import PersonaRepository
 from app.modules.chat.schemas import Citation
 from app.modules.rag.embeddings import EmbeddingModel
@@ -118,6 +119,28 @@ class ChatService:
 
     async def list_personas(self) -> list[PersonaConfig]:
         return await self.repo.list_all()
+
+    async def describe_personas(self) -> list[dict[str, object]]:
+        """Las narradoras tal como las necesita el selector público.
+
+        Incluye el nombre de la comunidad y las preguntas sugeridas, derivadas
+        del corpus cuando el equipo todavía no ha escrito las suyas.
+        """
+        descripciones = []
+        for persona in await self.repo.list_all():
+            titulos = await self.repo.published_titles(persona.theme_slug)
+            descripciones.append(
+                {
+                    "theme_slug": persona.theme_slug,
+                    "activation": persona.activation,
+                    "voice_policy": persona.voice_policy,
+                    "base_language": persona.base_language,
+                    "name_es": persona.theme.name_es,
+                    "name_en": persona.theme.name_en,
+                    "suggested_questions": suggestions_for(persona, titulos),
+                }
+            )
+        return descripciones
 
     async def get_persona(self, theme_slug: str) -> PersonaConfig:
         persona = await self.repo.get_by_theme(theme_slug)
@@ -221,7 +244,13 @@ class ChatService:
             messages=mensajes,
         )
 
-    def build_citations(self, chunks: list[RetrievedChunk], language: str) -> list[Citation]:
+    def build_citations(
+        self,
+        chunks: list[RetrievedChunk],
+        language: str,
+        *,
+        referenced: set[int] | None = None,
+    ) -> list[Citation]:
         """Convierte los fragmentos recuperados en citas con enlace real."""
         return [
             Citation(
@@ -231,6 +260,7 @@ class ChatService:
                 item_slug=fragmento.item_slug,
                 theme_slug=fragmento.theme_slug,
                 url=public_url(fragmento.theme_slug, fragmento.item_slug, language),
+                cited=referenced is None or numero in referenced,
             )
             for numero, fragmento in enumerate(chunks, start=1)
         ]
@@ -255,13 +285,19 @@ class ChatService:
         if listo.closed is not None:
             return listo.closed
 
-        texto = await self.model.generate(listo.messages)
+        crudo = await self.model.generate(listo.messages)
+
+        # Se descartan los marcadores que no correspondan a un fragmento
+        # entregado, antes de que salgan de aquí: quien consuma esta respuesta
+        # no tiene por qué saber cuántos fragmentos hubo.
+        texto = prompts.sanitize_markers(crudo.strip(), len(listo.chunks))
+        referenciados = prompts.cited_markers(texto, len(listo.chunks))
 
         return ChatTurn(
             conversation_id=listo.conversation_id,
-            reply=texto.strip(),
+            reply=texto,
             language=listo.language,
-            citations=self.build_citations(listo.chunks, listo.language),
+            citations=self.build_citations(listo.chunks, listo.language, referenced=referenciados),
             sent_messages=listo.messages,
         )
 

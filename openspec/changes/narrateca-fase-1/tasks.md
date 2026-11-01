@@ -155,7 +155,7 @@
 - [x] 11.3 🔒 Modelar `PersonaConfig` por tema con prompt de sistema, corpus, política de voz, política de seguridad, idioma y estado de activación
 - [x] 11.4 Registrar la política de voz de las cuatro comunidades, con voz femenina exclusiva para los temas de mujeres, aunque la síntesis no se implemente en esta fase
 - [x] 11.5 🔒 Implementar los estados de activación `draft`, `coming_soon` y `active`, independientes entre comunidades
-- [ ] 11.6 ⏸ Implementar la página del chatbot con selector que muestra las cuatro comunidades y señala las no disponibles *(a la espera del export de Stitch)*
+- [x] 11.6 Implementar la página del chatbot con selector que muestra las cuatro comunidades y señala las no disponibles *(diseño sobrio; se rehará con el export de Stitch)*
 - [x] 11.7 🔒 Implementar la recuperación filtrada por tema y por consentimiento
 - [x] 11.8 🔒 Redactar y ajustar el prompt de sistema de la narradora anclada: primera persona del colectivo, sin inventar hechos, sin biografía individual
 - [x] 11.9 Implementar la respuesta de ausencia de material cuando la recuperación no devuelve fragmentos suficientemente relevantes

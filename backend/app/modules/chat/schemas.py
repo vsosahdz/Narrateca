@@ -31,6 +31,12 @@ class Citation(BaseModel):
     #: fragmento está en español. `None` cuando no aplica.
     translation: str | None = None
 
+    #: Si la respuesta llegó a referenciar este fragmento con su marcador. Un
+    #: fragmento recuperado que el modelo no usó sigue siendo material válido
+    #: —la interfaz puede ofrecerlo como lectura relacionada— pero no sostiene
+    #: ninguna afirmación concreta, y mezclarlos engañaría sobre qué apoya qué.
+    cited: bool = False
+
 
 class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=2000)
@@ -69,9 +75,43 @@ class PersonaRead(BaseModel):
     voice_policy: VoicePolicy
     base_language: str
 
+    #: Nombre de la comunidad, para que el selector no tenga que cruzar con
+    #: el listado de temas solo para escribir un encabezado.
+    name_es: str = ""
+    name_en: str = ""
+
+    #: Preguntas de ejemplo con material detrás. Las escribe el equipo; si no
+    #: las hay, se derivan de los títulos de las piezas publicadas.
+    suggested_questions: list[str] = []
+
     @property
     def available(self) -> bool:
         return self.activation is ActivationState.ACTIVE
+
+
+class OrientationRead(BaseModel):
+    """Una comunidad que cubre la pregunta de quien llega."""
+
+    theme_slug: str
+    theme_name_es: str
+    theme_name_en: str
+    matches: int
+    best_item_title: str | None = None
+    available: bool = True
+
+
+class OrientationRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=2000)
+
+
+class OrientationResponse(BaseModel):
+    """Resultado de la recepción.
+
+    No lleva un campo de respuesta redactada porque la recepción no redacta:
+    enumera comunidades con material y encamina.
+    """
+
+    communities: list[OrientationRead] = []
 
 
 class PersonaAdminRead(PersonaRead):

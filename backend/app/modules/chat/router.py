@@ -18,7 +18,15 @@ from app.core.database import get_session
 from app.modules.admin.dependencies import get_optional_account
 from app.modules.admin.models import Account
 from app.modules.chat.llm import LanguageModel, get_language_model
-from app.modules.chat.schemas import ChatRequest, ChatResponse, PersonaRead
+from app.modules.chat.reception import ReceptionService
+from app.modules.chat.schemas import (
+    ChatRequest,
+    ChatResponse,
+    OrientationRead,
+    OrientationRequest,
+    OrientationResponse,
+    PersonaRead,
+)
 from app.modules.chat.service import ChatService
 from app.modules.rag.embeddings import EmbeddingModel, get_embedding_model
 
@@ -46,8 +54,31 @@ def get_service(
     ),
 )
 async def list_personas(service: ChatService = Depends(get_service)) -> list[PersonaRead]:
-    personas = await service.list_personas()
-    return [PersonaRead.model_validate(p) for p in personas]
+    return [PersonaRead.model_validate(p) for p in await service.describe_personas()]
+
+
+@router.post(
+    "/orientacion",
+    response_model=OrientationResponse,
+    summary="Orientar hacia la comunidad que tiene material",
+    description=(
+        "La recepción de la página del chatbot. Dada una pregunta, consulta el "
+        "índice de cada comunidad abierta y devuelve en cuáles hay material, de "
+        "más a menos.\n\n"
+        "**No consulta al modelo de lenguaje y no redacta texto.** Enumera "
+        "comunidades, y por eso no puede afirmar nada que el archivo no "
+        "sostenga: lo que no está en el índice, no lo nombra."
+    ),
+)
+async def orientar(
+    payload: OrientationRequest,
+    session: AsyncSession = Depends(get_session),
+    embedder: EmbeddingModel = Depends(get_embedding_model),
+    account: Account | None = Depends(get_optional_account),
+) -> OrientationResponse:
+    recepcion = ReceptionService(session, embedder=embedder)
+    comunidades = await recepcion.orient(payload.question, is_staff=account is not None)
+    return OrientationResponse(communities=[OrientationRead(**vars(o)) for o in comunidades])
 
 
 @router.post(
