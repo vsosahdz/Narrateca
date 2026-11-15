@@ -128,6 +128,28 @@ panel, auditoría del índice expuesta) y con ello se cierran las tareas 13.3 a
 El grupo 5 (transcripción con Whisper) y el grupo 9 (contenido geográfico)
 siguen aplazados por decisión de Víctor.
 
+## La integración continua está en rojo, y no es por el código
+
+Desde el commit `9519e3e` —que solo añade documentación— los cinco trabajos de
+CI fallan. **No es un fallo de las pruebas.** Los trabajos empiezan y terminan
+en dos segundos, sin ejecutar un solo paso, sin registro y sin runner asignado:
+GitHub no está provisionando máquinas para este repositorio.
+
+Actions está habilitado a nivel de repositorio (`enabled: true`), así que la
+causa está en la cuenta. Lo habitual es un límite de gasto alcanzado o un medio
+de pago con problema, que bloquea Actions incluso en repositorios públicos.
+Comprobarlo requiere acceso a la facturación de la cuenta, que es de Víctor.
+
+Mientras tanto, lo que CI ejecutaría se ha verificado en local sobre el mismo
+árbol, y pasa entero: integridad del repositorio, linters y 273 pruebas del
+backend, ida y vuelta de migraciones sin cambios pendientes, formato y
+validación de los dos ambientes de Terraform, eslint, stylelint, tipos,
+contraste WCAG y 19 pruebas del frontend, y la construcción de las dos imágenes
+de contenedor.
+
+Quien retome esto: **no busques el fallo en el código**. Revisa primero la
+facturación de Actions.
+
 ## Cómo comprobar que todo sigue en pie
 
 ```bash
