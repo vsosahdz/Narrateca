@@ -66,3 +66,10 @@ arquitectura que se derivan de esa restricción están documentadas en
 ## Flujo de trabajo
 
 Ver [docs/flujo-de-trabajo.md](docs/flujo-de-trabajo.md).
+
+## Dónde quedó el trabajo
+
+[docs/estado-y-continuacion.md](docs/estado-y-continuacion.md) resume el avance
+por grupo de tareas, qué está bloqueado y en quién, las decisiones recientes que
+no se leen en el código, y las trampas del entorno que ya costaron tiempo una
+vez. Es el punto de entrada para retomar el proyecto.
